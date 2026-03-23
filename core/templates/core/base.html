@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    
+    <meta charset="UTF-8">
+    <title>Patch Works e Afins</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+   
+</head>
+
+<body>
+
+<header>
+    <div class="logo-container">
+    <!--<img src="{% static 'core/logo.png' %}" alt="Logo">-->
+    <span class="logo-text">Patch Works e Afins</span>
+    </div>
+
+    <nav>
+        <a href="/">Início</a>
+        <a href="/produtos/">Produtos</a>
+        <a href="/avaliacoes/">Avaliações</a>
+        <a href="/contato/">Contato</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <div class="hero-content">
+
+        <!-- LOGO GRANDE -->
+        <div class="hero-logo">
+            <img src="{% static 'core/logo.png' %}" alt="Logo">
+        </div>
+
+        <!-- TEXTO -->
+        <div class="hero-text">
+            <h1>Artesanato que transforma</h1>
+            <p>Produtos únicos feitos com carinho</p>
+            <a href="/produtos" class="btn">Ver Catálogo →</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

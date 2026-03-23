@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Avaliações</h2>
+<p>Veja algumas avaliações relacionadas ao nosso trabalho artesanal.</p>
+
+
+<div class="avaliacoes-grid">
+    {% for item in avaliacoes %}
+        <div class="avaliacao-card">
+            <div class="avaliacao-info">
+                <h3>{{ item.titulo }}</h3>
+                <p>{{ item.descricao }}</p>
+            </div>
+
+            <img src="{{ item.imagem.url }}" alt="{{ item.titulo }}" class="avaliacao-img">
+                <!--<div class="avaliacao-info">
+                    <span class="selo-avaliacao">✔ Avaliação verificada</span>
+                </div>-->
+            <div class="avaliacao-acao">
+                <a href="{{ item.link }}" target="_blank" class="btn">
+                    Ver mais
+                </a>
+
+            </div>
+        </div>
+    {% empty %}
+        <p>Ainda não foi registrado no painel adm avaliações.</p>
+    {% endfor %}
+</div>
+{% endblock %}
