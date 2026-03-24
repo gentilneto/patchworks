@@ -21,10 +21,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 '''
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.contrib import admin #importando o painel adm do django
+from django.urls import path, include #defini as rotas o include permite usar o core
+from django.conf import settings #acessa as configurações do settings.py
+from django.conf.urls.static import static #função usada para servir os arquivos de mideia
 
 urlpatterns = [
     path('', include('core.urls')),
@@ -32,4 +32,6 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    # acessa configurações do projeto (settings.py)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # verifica se o projeto está em modo de desenvolvimento (DEBUG=True)
