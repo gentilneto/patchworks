@@ -106,3 +106,4 @@ Estrutura do projeto
   integração com banco mysql
 
 ```
+⚠️ Este repositório contém banco e mídias apenas para fins acadêmicos e colaboração em equipe.
