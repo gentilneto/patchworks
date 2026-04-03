@@ -78,7 +78,7 @@ venv\Scripts\activate   # Windows
 5. Criar user admin
 	python manage.py createsuperuser
 
-6. Rodas server
+6. Rodar o server
 	python manage.py runserver
 
 acessar via 
