@@ -1,0 +1,228 @@
+.titulo-produtos {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 36px;
+    color: #222;
+}
+
+.produtos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 24px;
+}
+
+.produto-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.produto-card:hover {
+    transform: translateY(-4px);
+}
+
+.produto-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.produto-info {
+    padding: 14px;
+}
+
+.produto-titulo {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.produto-preco {
+    color: #e91e63;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    /*centralizando*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh; /*limita ao tamanho da tela*/
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /*scroll interno*/
+}
+
+@media (max-width: 600px){
+    .modal-content{
+        padding: 15px;
+    }
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #222;
+}
+
+.modal-content::-webkit-scrollbar{
+    width: 7px;
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+    background: #ccc;
+    border-radius: 11px;
+}
+
+.modal-img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #f7f7f7;
+    margin-bottom: 18px;
+}
+
+.galeria {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0 20px 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.galeria-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    /*border: 2px solid #ddd; */
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.galeria {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0 20px 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.galeria-img:hover {
+    transform: translateY(-2px);
+    border-color: #8e44ad;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.galeria-img.ativa {
+    border-color: #4e73df;
+    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.20);
+}
+
+.produto-descricao {
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.produto-detalhes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin: 24px 0;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+}
+
+.detalhe-item {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.detalhe-item strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.detalhe-item span {
+    font-size: 15px;
+    color: #555;
+}
+
+.btn-whatsapp {
+    display: inline-block;
+    /* width: 100%; */
+    /* text-align: center; */
+    margin-top: 15px;
+    padding: 12px 18px;
+    background: #25D366;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-whatsapp:hover {
+    opacity: 0.9;
+}
+
+.btn-fechar {
+    padding: 10px 16px;
+    /* width: 100%; */
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    border: none;
+    background: #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-fechar:hover {
+    background: #cfcfcf;
+}
+
+@media (max-width: 768px) {
+    .produto-detalhes {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        margin: 20px auto;
+        padding: 18px;
+    }
+}
