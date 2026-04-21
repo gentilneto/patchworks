@@ -1,7 +1,7 @@
 function abrirModal(id) {
     const modal = document.getElementById(id);
     if (modal) {
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
     }
 }
 

@@ -1,9 +1,13 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Avaliações</h2>
-<p>Veja algumas avaliações relacionadas ao nosso trabalho artesanal.</p>
 
+<link rel="stylesheet" href="{% static 'core/css/avaliacoes.css' %}">
+
+<section class="pagina-avaliacoes">
+    <h2 class="titulo-avaliacoes">Avaliações</h2>
+    <p class="subtitulo-avaliacoes">Veja algumas avaliações relacionadas ao nosso trabalho artesanal.</p>
 
 <div class="avaliacoes-grid">
     {% for item in avaliacoes %}

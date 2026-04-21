@@ -5,97 +5,120 @@
 
 <link rel="stylesheet" href="{% static 'core/css/produtos.css' %}">
 
-<h2 class="titulo-produtos">Produtos</h2>
+<section class="pagina-produtos">
+    <h2 class="titulo-produtos">Produtos</h2>
 
-<div class="produtos-container">
+    <!-- GRID SOMENTE COM OS CARDS -->
+    <div class="produtos-container">
+        {% for produto in produtos %}
+            <div class="produto-card" onclick="abrirModal('modal{{ produto.id }}')">
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-card-img">
 
+                <div class="produto-info">
+                    <div class="produto-titulo">{{ produto.nome }}</div>
+                    <div class="produto-preco">R$ {{ produto.preco }}</div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="mensagem-vazia">Ainda não há produtos cadastrados.</p>
+        {% endfor %}
+    </div>
+
+    <!-- MODAIS FORA DO GRID -->
     {% for produto in produtos %}
+        <div id="modal{{ produto.id }}" class="modal">
+            <div class="modal-content">
 
-    <!-- card do produto -->
-    <div class="produto-card" onclick="abrirModal('modal{{ produto.id }}')">
-        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
-        <div class="produto-info">
-            <div class="produto-titulo">{{ produto.nome }}</div>
-            <div class="produto-preco">R$ {{ produto.preco }}</div>
-        </div>
-    </div>
+                <h3 class="modal-titulo">{{ produto.nome }}</h3>
 
-    <!-- modal do produto -->
-    <div id="modal{{ produto.id }}" class="modal">
-        <div class="modal-content">
+                <div class="produto-topo-modal">
+                    <!-- MINIATURAS -->
+                    <div class="galeria">
+                        <img
+                            src="{{ produto.imagem.url }}"
+                            alt="{{ produto.nome }}"
+                            class="galeria-img ativa"
+                            onclick="trocarImagem('{{ produto.id }}', this)"
+                        >
 
-            <h3>{{ produto.nome }}</h3>
+                        {% for img in produto.imagens.all %}
+                            <img
+                                src="{{ img.imagem.url }}"
+                                alt="Imagem adicional de {{ produto.nome }}"
+                                class="galeria-img"
+                                onclick="trocarImagem('{{ produto.id }}', this)"
+                            >
+                        {% endfor %}
+                    </div>
 
-            <!-- imagem principal -->
-            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="modal-img" id="imagem-principal-{{ produto.id }}">
+                    <!-- IMAGEM PRINCIPAL -->
+                    <div class="imagem-principal-container">
+                        <img
+                            src="{{ produto.imagem.url }}"
+                            alt="{{ produto.nome }}"
+                            class="modal-img"
+                            id="imagem-principal-{{ produto.id }}"
+                        >
+                    </div>
+                </div>
 
-            <!-- galeria de imagens extras -->
-            <div class="galeria">
-                <img 
-                    src="{{ produto.imagem.url }}" 
-                    alt="{{ produto.nome }}" 
-                    class="galeria-img ativa"
-                    onclick="trocarImagem('{{ produto.id }}', this)"
-                >
+                <!-- BLOCO DE DESCRIÇÃO E DETALHES -->
+                <div class="produto-bloco-info">
+                    <h4>Descrição do produto</h4>
+                    <p class="produto-descricao">{{ produto.descricao }}</p>
 
-                {% for img in produto.imagens.all %}
-                    <img 
-                        src="{{ img.imagem.url }}" 
-                        alt="Imagem adicional de {{ produto.nome }}" 
-                        class="galeria-img"
-                        onclick="trocarImagem('{{ produto.id }}', this)"
-                    >
-                {% endfor %}
+                    <div class="produto-detalhes">
+                        <div class="detalhe-item">
+                            <div class="detalhe-icone">📏</div>
+                            <div class="detalhe-texto">
+                                <strong>Medidas (A x L x C)</strong>
+                                <span>{{ produto.medidas }}</span>
+                            </div>
+                        </div>
+
+                        <div class="detalhe-item">
+                            <div class="detalhe-icone">⚖️</div>
+                            <div class="detalhe-texto">
+                                <strong>Peso</strong>
+                                <span>{{ produto.peso }}</span>
+                            </div>
+                        </div>
+
+                        <div class="detalhe-item">
+                            <div class="detalhe-icone">🏷️</div>
+                            <div class="detalhe-texto">
+                                <strong>Código do produto</strong>
+                                <span>{{ produto.codigo }}</span>
+                            </div>
+                        </div>
+
+                        <div class="detalhe-item">
+                            <div class="detalhe-icone">📅</div>
+                            <div class="detalhe-texto">
+                                <strong>Publicado em</strong>
+                                <span>{{ produto.publicado_em|date:"d/m/Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AÇÕES -->
+                <div class="acoes-modal">
+                    {% if produto.whatsapp_numero %}
+                        <a class="btn-whatsapp" href="{{ produto.whatsapp_link }}" target="_blank">
+                            Falar no WhatsApp
+                        </a>
+                    {% endif %}
+
+                    <button type="button" class="btn-fechar" onclick="fecharModal('modal{{ produto.id }}')">
+                        Fechar
+                    </button>
+                </div>
+
             </div>
-
-            <!-- descrição -->
-            <p class="produto-descricao">{{ produto.descricao }}</p>
-
-            <!-- detalhes -->
-            <div class="produto-detalhes">
-
-                <div class="detalhe-item">
-                    <strong>Medidas</strong>
-                    <span>{{ produto.medidas }}</span>
-                </div>
-
-                <div class="detalhe-item">
-                    <strong>Peso</strong>
-                    <span>{{ produto.peso }}</span>
-                </div>
-
-                <div class="detalhe-item">
-                    <strong>Código</strong>
-                    <span>{{ produto.codigo }}</span>
-                </div>
-
-                <div class="detalhe-item">
-                    <strong>Publicado em</strong>
-                    <span>{{ produto.publicado_em|date:"d/m/Y" }}</span>
-                </div>
-
-            </div>
-
-            <!-- botão do WhatsApp -->
-            <a class="btn-whatsapp" href="{{ produto.whatsapp_link }}" target="_blank">
-                Falar no WhatsApp
-            </a>
-
-            <br><br>
-
-            <!-- botão fechar -->
-            <button type="button" class="btn-fechar" onclick="fecharModal('modal{{ produto.id }}')">
-                Fechar
-            </button>
-
         </div>
-    </div>
-
-    {% empty %}
-        <p>Ainda não há produtos cadastrados.</p>
     {% endfor %}
-
-</div>
+</section>
 
 <script src="{% static 'core/js/produtos.js' %}"></script>
 

@@ -1,5 +1,9 @@
 
 from django.db import models  # importa o módulo de modelos do Django (ORM)
+from urllib.parse import quote
+#Transforma a mensagem em formato válido para URL do zap
+import re
+#limpa o numero removendo  -()
 
 class Produto(models.Model): #cria a tabela de produtos no banco
     nome = models.CharField(max_length=150)
@@ -12,7 +16,7 @@ class Produto(models.Model): #cria a tabela de produtos no banco
     #preço do produto
     imagem = models.ImageField(upload_to='produtos/')
     #imagem principal do produto
-    whatsapp_link = models.URLField()
+    #whatsapp_link = models.URLField()
     #Link para contato no whats
     medidas = models.CharField(max_length=100, blank=True)
     # medidas do produto, por exemplo: 0.1 x 0.08 x 0.01 cm
@@ -20,12 +24,29 @@ class Produto(models.Model): #cria a tabela de produtos no banco
     #peso do produto
     publicado_em = models.DateField(null=True, blank=True)
     #data de publicação
+    
+    whatsapp_numero = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        help_text = "Digite no formato: 5511999999999 (sem espaço ou hifém)"
+    )
+
     criado_em = models.DateTimeField(auto_now_add=True)
     ##salva automaticamente a data e hora quando o produto for criado
 
     def __str__(self):
         return self.nome
         #nostra o nome do produto
+
+    @property
+    def whatsapp_link(self):
+        if not self.whatsapp_numero:
+            return "#"
+
+        numero = re.sub(r'\D', '', self.whatsapp_numero)
+        mensagem = f"Olá, tenho interesse no produto {self.nome}. Código: {self.codigo}"
+        return f"https://wa.me/{numero}?text={quote(mensagem)}"
 
     class Meta:
         verbose_name = "Produto"
