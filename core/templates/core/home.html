@@ -1,40 +1,140 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
-{% block content %}
-
-<h2>Bem-vindo à nossa lojinha!</h2>
-
-<p>
-Senhores (as) clientes, bem-vindos à nossa lojinha! Nosso intuito é levar lembranças dos melhores momentos que vivemos.
-</p>
-
-<p>
-Para ficar por dentro de todas as novidades, não deixe de curtir nossa página no Facebook.
-</p>
-
-<p>
-Nossos prazos de entrega variam de acordo com a nossa demanda.
-</p>
-
-<p>
-Porque prazos longos? Não trabalhamos com estoque. Produzimos sob medida conforme os pedidos.
-</p>
-
-<p>
-Respondemos nossas mensagens em até <strong>48 horas úteis</strong>.
-</p>
-
-<p>
-Tem urgência no seu pedido? Entre em contato conosco e avaliaremos o seu caso.
-</p>
-
-<p>
-O cálculo do frete pode ser feito diretamente na simulação de compra do produto.
-</p>
-
-<p>
-<strong>Entre, Curta, Compre e Compartilhe essa ideia!</strong><br>
-Boas Festas 🎄
-</p>
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/home.css' %}">
 {% endblock %}
+
+{% block full_width %}
+<section class="home-parallax-scene">
+
+    <!-- FUNDO STICKY -->
+    <div class="home-parallax-bg">
+        <div class="parallax-overlay"></div>
+    </div>
+
+    <!-- CONTEÚDO QUE PASSA POR CIMA -->
+    <div class="home-scroll-content">
+
+        <!-- TEXTO SOBRE O PARALLAX -->
+        <section class="home-parallax-texto">
+            <div class="container">
+                <div class="parallax-content">
+                    <span class="home-tag">Feito à mão, com amor e superação</span>
+                    <h1>Artesanato com história</h1>
+                    <p>
+                        Cada peça carrega dedicação, carinho e a força de uma trajetória construída com coragem.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-intro">
+            <div class="container">
+                <div class="home-intro-box">
+                    <h2 class="home-title">Artesanato que transforma momentos em lembranças</h2>
+                    <p class="home-text">
+                        Mais do que produtos artesanais, criamos lembranças pensadas para marcar momentos especiais.
+                    </p>
+
+                    <div class="home-actions">
+                        <a href="/produtos/" class="btn">Ver produtos</a>
+                        <a href="/contato/" class="btn btn-secundario">Fale conosco</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-content-section">
+            <div class="container">
+                <div class="home-content">
+                    <h2>Nossa história</h2>
+
+                    <p>
+                        A Patch Works e Afins nasceu em um momento desafiador da nossa vida.
+                        Em meio à escassez de trabalho e às dificuldades enfrentadas durante a pandemia,
+                        encontramos no artesanato uma forma de seguir em frente.
+                    </p>
+
+                    <p>
+                        Mesmo sendo menor de idade no início dessa trajetória, colocamos criatividade,
+                        esforço e vontade de vencer em cada detalhe. O que começou como uma alternativa
+                        para ajudar a manter as contas de casa, aos poucos se transformou em aprendizado,
+                        evolução e sonho.
+                    </p>
+
+                    <p>
+                        Hoje, seguimos com o mesmo propósito que nos trouxe até aqui:
+                        transformar ideias, momentos e sentimentos em lembranças especiais.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-como-trabalhamos">
+            <div class="container">
+                <div class="home-como-box">
+                    <h2>Como trabalhamos</h2>
+
+                    <div class="home-como-grid">
+                        <div class="home-como-card">
+                            <h3>Produção sob encomenda</h3>
+                            <p>
+                                Não trabalhamos com estoque pronto. Cada pedido é feito sob medida,
+                                conforme a necessidade de cada cliente.
+                            </p>
+                        </div>
+
+                        <div class="home-como-card">
+                            <h3>Prazos de entrega</h3>
+                            <p>
+                                Nossos prazos podem variar de acordo com a demanda e com o tempo
+                                necessário para produção junto aos fornecedores.
+                            </p>
+                        </div>
+
+                        <div class="home-como-card">
+                            <h3>Atendimento</h3>
+                            <p>
+                                Respondemos nossas mensagens em até 48 horas úteis. Caso não receba
+                                retorno imediato, fique tranquilo(a): responderemos dentro desse prazo.
+                            </p>
+                        </div>
+
+                        <div class="home-como-card">
+                            <h3>Urgência e frete</h3>
+                            <p>
+                                Se o seu pedido tiver urgência, entre em contato conosco para
+                                avaliarmos a possibilidade. O frete pode ser calculado diretamente
+                                na simulação da compra.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-final">
+            <div class="container">
+                <div class="home-final-box">
+                    <h2>Entre, conheça, escolha e compartilhe essa ideia</h2>
+
+                    <p>
+                        Cada encomenda representa não apenas um produto vendido, mas também a continuidade
+                        de uma história construída com coragem, trabalho e esperança.
+                    </p>
+
+                    <p>
+                        Seja muito bem-vindo(a) à nossa lojinha.
+                    </p>
+
+                    <a href="/produtos/" class="btn">Explorar catálogo</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}{% endblock %}

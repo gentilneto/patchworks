@@ -8,15 +8,81 @@
 <section class="pagina-produtos">
     <h2 class="titulo-produtos">Produtos</h2>
 
+    <!-- FILTRO E BUSCA -->
+    <form method="get" class="filtro-produtos-form">
+        <input
+            type="text"
+            name="busca"
+            placeholder="Buscar produto..."
+            value="{{ busca }}"
+            class="campo-busca-produto"
+        >
+
+        <select name="categoria" class="select-categoria-produto">
+            <option value="">Todas as categorias</option>
+            {% for cat in categorias %}
+                <option value="{{ cat.id }}" {% if categoria_id == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.nome }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-buscar-produto">Buscar</button>
+    </form>
+
     <!-- GRID SOMENTE COM OS CARDS -->
     <div class="produtos-container">
         {% for produto in produtos %}
             <div class="produto-card" onclick="abrirModal('modal{{ produto.id }}')">
-                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-card-img">
+                <div class="produto-card-imagem-wrap">
+                    {% if produto.tem_desconto and produto.preco_desconto %}
+                        <span class="badge-desconto-pix">Desconto PIX</span>
+                    {% endif %}
+
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-card-img">
+                </div>
 
                 <div class="produto-info">
                     <div class="produto-titulo">{{ produto.nome }}</div>
-                    <div class="produto-preco">R$ {{ produto.preco }}</div>
+
+                    {% if produto.tem_desconto and produto.preco_desconto %}
+                        <div class="produto-preco-bloco">
+                            <div class="linha-desconto-topo">
+                                <span class="desconto-badge">{{ produto.porcentagem_desconto }}% off</span>
+                                <span class="preco-antigo-topo">R$ {{ produto.preco }}</span>
+                            </div>
+
+                            <div class="preco-novo-destaque">
+                                R$ {{ produto.preco_desconto }} <span class="pix-label">no pix</span>
+                            </div>
+
+                            <div class="preco-secundario">
+                                R$ {{ produto.preco }} no cartão de crédito
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="produto-preco-bloco">
+                            <div class="preco-novo-destaque">
+                                R$ {{ produto.preco }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if produto.quantidade_minima %}
+                        <div class="produto-compra-minima">
+                            Compra mínima: {{ produto.quantidade_minima }} unidades
+                        </div>
+                    {% endif %}
+
+                    {% if produto.prazo_dias_uteis %}
+                        <div class="produto-observacao">
+                            <span class="icone-observacao">🕒</span>
+                            <div class="texto-observacao">
+                                Feito sob encomenda<br>
+                                Produto pronto em até {{ produto.prazo_dias_uteis }} dias úteis
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% empty %}
@@ -62,6 +128,28 @@
                     </div>
                 </div>
 
+                <!-- PREÇO DENTRO DO MODAL -->
+                <div class="produto-preco-modal">
+                    {% if produto.tem_desconto and produto.preco_desconto %}
+                        <div class="linha-desconto-topo">
+                            <span class="desconto-badge">{{ produto.porcentagem_desconto }}% off</span>
+                            <span class="preco-antigo-topo">R$ {{ produto.preco }}</span>
+                        </div>
+
+                        <div class="preco-novo-modal">
+                            R$ {{ produto.preco_desconto }} <span class="pix-label">no pix</span>
+                        </div>
+
+                        <div class="preco-secundario">
+                            R$ {{ produto.preco }} no cartão de crédito
+                        </div>
+                    {% else %}
+                        <div class="preco-normal-modal">
+                            R$ {{ produto.preco }}
+                        </div>
+                    {% endif %}
+                </div>
+
                 <!-- BLOCO DE DESCRIÇÃO E DETALHES -->
                 <div class="produto-bloco-info">
                     <h4>Descrição do produto</h4>
@@ -100,6 +188,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- BLOCO EXTRA DE INFORMAÇÕES -->
+
+                <div class="produto-info-extra-modal">
+                    {% if produto.quantidade_minima %}
+                        <div class="produto-compra-minima">
+                            Compra mínima: {{ produto.quantidade_minima }} unidades
+                        </div>
+                    {% endif %}
+
+                    {% if produto.prazo_dias_uteis %}
+                        <div class="produto-observacao">
+                            <span class="icone-observacao">🕒</span>
+                            <div class="texto-observacao">
+                                Feito sob encomenda<br>
+                                Produto pronto em até {{ produto.prazo_dias_uteis }} dias úteis
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!-- AÇÕES -->
