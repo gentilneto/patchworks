@@ -69,11 +69,16 @@ python manage.py runserver
 - http://127.0.0.1:8000/  
 - http://127.0.0.1:8000/admin/
 
-## 6. Frete (opcional por integrante)
+## 6. Frete + túnel Cloudflare (opcional por integrante)
 
-Siga `docs/MANUAL_MELHOR_ENVIO.md` e `docs/PASSO_A_PASSO_CLOUDFLARED.md`.
+O callback OAuth do Melhor Envio exige **HTTPS**. Resumo no [README](../README.md#túnel-cloudflare-https-local--para-o-time):
 
-Fluxo resumido: app na Área Dev → `.env` → túnel HTTPS → `/api/melhorenvio/autorizar/`.
+1. `cloudflared tunnel --url http://127.0.0.1:8000`  
+2. Atualizar `.env` + callback com a URL `trycloudflare.com`  
+3. Autorizar em `/api/melhorenvio/autorizar/`  
+4. **Fechar:** `Ctrl + C` no terminal do cloudflared (a URL deixa de funcionar)
+
+Detalhes: `docs/MANUAL_MELHOR_ENVIO.md` e `docs/PASSO_A_PASSO_CLOUDFLARED.md`.
 
 ## 7. O que cada um deve versionar
 

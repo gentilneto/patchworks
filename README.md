@@ -118,10 +118,66 @@ python manage.py runserver
 
 1. Cadastre um app em **Integrações → Área Dev.** (sandbox)  
 2. Preencha `MELHOR_ENVIO_CLIENT_ID`, `CLIENT_SECRET` e `REDIRECT_URI` no `.env`  
-3. Callback precisa de **HTTPS** (use Cloudflare Tunnel — ver `docs/PASSO_A_PASSO_CLOUDFLARED.md`)  
+3. Callback precisa de **HTTPS** → use o túnel Cloudflare (seção abaixo)  
 4. Autorize: http://127.0.0.1:8000/api/melhorenvio/autorizar/  
 
 Detalhes: `docs/MANUAL_MELHOR_ENVIO.md`
+
+---
+
+## Túnel Cloudflare (HTTPS local) — para o time
+
+O Melhor Envio **não aceita** callback OAuth em `http://127.0.0.1`. O `cloudflared` cria um endereço **HTTPS** temporário que aponta para o Django na sua máquina — **grátis**, sem publicar o site.
+
+```
+Internet (HTTPS)  →  Cloudflare  →  seu PC (http://127.0.0.1:8000)
+```
+
+### 1. Instalar (uma vez)
+
+```powershell
+winget install Cloudflare.cloudflared --accept-package-agreements --accept-source-agreements
+```
+
+Feche e abra o PowerShell; confira com `cloudflared --version`.
+
+### 2. Subir o Django
+
+```powershell
+python manage.py runserver
+```
+
+### 3. Abrir o túnel (outro terminal)
+
+```powershell
+cloudflared tunnel --url http://127.0.0.1:8000
+```
+
+Copie a URL que aparecer, por exemplo:
+
+```
+https://nome-aleatorio.trycloudflare.com
+```
+
+### 4. Atualizar o `.env` (e o app no Melhor Envio)
+
+```env
+DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost,nome-aleatorio.trycloudflare.com
+DJANGO_CSRF_TRUSTED_ORIGINS=https://nome-aleatorio.trycloudflare.com
+MELHOR_ENVIO_REDIRECT_URI=https://nome-aleatorio.trycloudflare.com/api/melhorenvio/callback/
+```
+
+No Melhor Envio (Área Dev), use o **mesmo** callback. Reinicie o `runserver`.
+
+### 5. Fechar o túnel (quando não quiser mais)
+
+1. No terminal do `cloudflared`, pressione **`Ctrl + C`** — o HTTPS some na hora.  
+2. (Opcional) Pode fechar também o `runserver` com **`Ctrl + C`**.  
+3. A URL `trycloudflare.com` **deixa de funcionar**; na próxima vez que abrir o túnel, a URL **muda** e é preciso atualizar `.env` + callback de novo.
+
+Não precisa “desinstalar” o cloudflared: só pare o processo. O site volta a ser só local em http://127.0.0.1:8000/.
+
+Guia completo: [docs/PASSO_A_PASSO_CLOUDFLARED.md](docs/PASSO_A_PASSO_CLOUDFLARED.md) · conceito: [docs/MANUAL_CLOUDFLARE.md](docs/MANUAL_CLOUDFLARE.md)
 
 ---
 

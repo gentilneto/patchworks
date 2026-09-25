@@ -98,9 +98,17 @@ Reinicie o `runserver`.
 
 ---
 
-## Parar o túnel
+## Parar / fechar o túnel
 
-No terminal do cloudflared: `Ctrl + C`.
+Quando não precisar mais do HTTPS público:
+
+1. Vá no terminal onde o `cloudflared` está rodando.  
+2. Pressione **`Ctrl + C`** — o túnel encerra na hora.  
+3. A URL `https://….trycloudflare.com` **para de funcionar**.  
+4. O Django local (`runserver`) pode continuar; o site fica só em http://127.0.0.1:8000/.  
+5. Se quiser parar o site também, no terminal do Django use **`Ctrl + C`**.
+
+Não é necessário desinstalar o `cloudflared`. Na próxima autorização OAuth, abra o túnel de novo (a URL muda → atualize `.env` e o app Melhor Envio).
 
 ---
 
