@@ -1,4 +1,6 @@
-# Manual Melhor Envio — OAuth e cotação
+# Manual Melhor Envio — OAuth e cotação (v2.0)
+
+Repositório: https://github.com/gentilneto/patchworks (`main` = v2.0)
 
 ## 1. Conceito importante
 
@@ -8,8 +10,11 @@ A API exige `Authorization: Bearer <access_token>` obtido por **OAuth 2.0** apó
 
 **Integrações → Área Dev. → Cadastrar Aplicativo**
 
+Cada integrante pode (e deve) usar a **própria** conta sandbox / app — não compartilhem `CLIENT_SECRET` nem `melhorenvio_token.json` no Git.
+
 Documentação: https://docs.melhorenvio.com.br/reference/fluxo-de-autorização  
 Cotação: https://docs.melhorenvio.com.br/reference/calculo-de-fretes-por-produtos
+
 
 ---
 

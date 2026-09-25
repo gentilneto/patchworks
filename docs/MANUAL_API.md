@@ -1,9 +1,11 @@
-# Manual de rotas e APIs
+# Manual de rotas e APIs (v2.0)
 
 Referência das URLs do app `core` (`core/urls.py`).
 
-Base local: `http://127.0.0.1:8000`  
-Base com túnel (exemplo): `https://SEU-SUBDOMINIO.trycloudflare.com`
+Base local: `http://127.0.0.1:8000`
+
+Branch principal do código: `main` (v2.0).
+
 
 ---
 

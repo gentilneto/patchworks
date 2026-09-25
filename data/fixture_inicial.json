@@ -1,0 +1,268 @@
+[
+{
+  "model": "core.categoria",
+  "pk": 1,
+  "fields": {
+    "nome": "Brincos"
+  }
+},
+{
+  "model": "core.categoria",
+  "pk": 2,
+  "fields": {
+    "nome": "Lembrancinhas"
+  }
+},
+{
+  "model": "core.categoria",
+  "pk": 3,
+  "fields": {
+    "nome": "Calendarios"
+  }
+},
+{
+  "model": "core.produto",
+  "pk": 1,
+  "fields": {
+    "nome": "Brinde Brinco Dia das Mulheres - Ação corporativa",
+    "categoria": 1,
+    "codigo": "1DCC81F",
+    "descricao": "Brinde artesanal produzido para ação corporativa, ideal para eventos e lembranças especiais.",
+    "preco": "1.50",
+    "tem_desconto": true,
+    "preco_desconto": "1.18",
+    "imagem": "produtos/brinco_mulheres1.jpg",
+    "medidas": "0.1 x 0.08 x 0.01 cm",
+    "peso": "17 g",
+    "altura_cm": 10,
+    "largura_cm": 8,
+    "comprimento_cm": 1,
+    "peso_kg": "0.017",
+    "quantidade_minima": 100,
+    "prazo_dias_uteis": 10,
+    "publicado_em": "2026-04-02",
+    "whatsapp_numero": "5511970195882",
+    "criado_em": "2026-04-02T21:19:39.709Z"
+  }
+},
+{
+  "model": "core.produto",
+  "pk": 2,
+  "fields": {
+    "nome": "Brinde Brinco",
+    "categoria": 1,
+    "codigo": "1CFBA61",
+    "descricao": "Lembrancinha/brinde para as clientes.\r\n\r\nPodemos personalizar com seu logo/marca e @.\r\n\r\nAcompanha:\r\nTAG + Brinco de pérola 8MM + saquinho individual.\r\n\r\nFazemos em outros temas.\r\n\r\nConsulte-nos :)\r\n\r\nAtenção: As cores poderão sofrer variação de acordo com as configurações do seu monitor.",
+    "preco": "1.20",
+    "tem_desconto": true,
+    "preco_desconto": "1.10",
+    "imagem": "produtos/brinde-brinco-brinde-de-perola.jpg",
+    "medidas": "0.05 x 0.05 x 0.01 cm",
+    "peso": "17 g",
+    "altura_cm": 5,
+    "largura_cm": 5,
+    "comprimento_cm": 1,
+    "peso_kg": "0.017",
+    "quantidade_minima": 50,
+    "prazo_dias_uteis": 5,
+    "publicado_em": "2026-04-01",
+    "whatsapp_numero": "5511984945146",
+    "criado_em": "2026-04-21T19:54:08.520Z"
+  }
+},
+{
+  "model": "core.produto",
+  "pk": 3,
+  "fields": {
+    "nome": "Páscoa Caixa para Lembrancinha Bis",
+    "categoria": 2,
+    "codigo": "1DE5FD2",
+    "descricao": "Lembrancinha/brinde para clientes.\r\n\r\nPodemos personalizar com seu logo/marca e @.\r\nNão acompanha BIS.\r\n\r\nFazemos em outros temas, consulte-nos.",
+    "preco": "1.45",
+    "tem_desconto": false,
+    "preco_desconto": null,
+    "imagem": "produtos/pascoa-caixa-para-lembrancinha-bis-mimo-salao.jpg",
+    "medidas": "4 x 5 x 7 cm",
+    "peso": "15 g",
+    "altura_cm": 4,
+    "largura_cm": 5,
+    "comprimento_cm": 7,
+    "peso_kg": "0.015",
+    "quantidade_minima": null,
+    "prazo_dias_uteis": null,
+    "publicado_em": "2026-04-01",
+    "whatsapp_numero": "5511970195882",
+    "criado_em": "2026-04-21T21:16:11.842Z"
+  }
+},
+{
+  "model": "core.produto",
+  "pk": 4,
+  "fields": {
+    "nome": "Brinde Personalizado: Imã Calendário 2026",
+    "categoria": 3,
+    "codigo": "1F168E3",
+    "descricao": "Calendário personalizado 2026 e 2027.\r\n\r\nFazemos de acordo com seu tema/preferência.\r\n\r\nTamanho: 10 cm x 5 cm.",
+    "preco": "1.16",
+    "tem_desconto": false,
+    "preco_desconto": null,
+    "imagem": "produtos/brinde-personalizado-ima-calendario-2025-brinde-calendario.jpg",
+    "medidas": "0.03 x 0.03 x 0.01 cm",
+    "peso": "8g",
+    "altura_cm": 3,
+    "largura_cm": 3,
+    "comprimento_cm": 1,
+    "peso_kg": "0.008",
+    "quantidade_minima": null,
+    "prazo_dias_uteis": null,
+    "publicado_em": "2026-04-02",
+    "whatsapp_numero": "5511970195882",
+    "criado_em": "2026-04-21T21:18:59.377Z"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 1,
+  "fields": {
+    "produto": 1,
+    "imagem": "produtos/brinco_mulheres2.jpg"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 3,
+  "fields": {
+    "produto": 2,
+    "imagem": "produtos/brinde-brinco-brinde-estetica.jpg"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 4,
+  "fields": {
+    "produto": 2,
+    "imagem": "produtos/brinde-brinco-brinde.jpg"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 5,
+  "fields": {
+    "produto": 2,
+    "imagem": "produtos/brinde-brinco-coorporativa-dia-das-mulheres.jpg"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 6,
+  "fields": {
+    "produto": 2,
+    "imagem": "produtos/brinde-brinco-brinde-make1.jpg"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 7,
+  "fields": {
+    "produto": 3,
+    "imagem": "produtos/pascoa-caixa-para-lembrancinha-bis-brinde-para-maquiador.jpg"
+  }
+},
+{
+  "model": "core.produtoimagem",
+  "pk": 8,
+  "fields": {
+    "produto": 4,
+    "imagem": "produtos/brinde-personalizado-ima-calendario-2025-micro-sobrancelha.jpg"
+  }
+},
+{
+  "model": "core.avaliacao",
+  "pk": 1,
+  "fields": {
+    "produto": null,
+    "titulo": "Gabrielle Gonçalves avaliou Brinde Brinco Dia das Mulheres - Ação corporativa",
+    "descricao": "Tive uma ótima experiência! A Juliana foi super atenciosa e nos ajudou com um prazo de entrega muito rápido para a nossa ação. Recomendo muito!",
+    "imagem": "avaliacoes/avaliacao_1.jpg",
+    "link": "https://www.elo7.com.br/brinde-brinco-dia-das-mulheres-acao-corporativa/av/7E221C5?utm_source=copy&utm_medium=feedback",
+    "criado_em": "2026-03-23T19:04:57.963Z"
+  }
+},
+{
+  "model": "core.avaliacao",
+  "pk": 2,
+  "fields": {
+    "produto": null,
+    "titulo": "Natalia Praxedes avaliou Brinde Brinco Dia das Mulheres - Presente dia das mulheres.",
+    "descricao": "Amei, mto caprichoso.",
+    "imagem": "avaliacoes/avaliacao_2.jpg",
+    "link": "https://www.elo7.com.br/brinde-brinco-dia-das-mulheres-presente-dia-das-mulheres/av/7E12B56?utm_source=copy&utm_medium=feedback",
+    "criado_em": "2026-03-23T19:39:20.240Z"
+  }
+},
+{
+  "model": "core.avaliacao",
+  "pk": 3,
+  "fields": {
+    "produto": null,
+    "titulo": "Joelma Teixeira avaliou Brinde Brinco Dia das Mulheres - Lembrancinhas do dia das mulheres na minha igreja..",
+    "descricao": "Eu fiquei muito satisfeita com a minha compra, a vendedora foi muito prestativa,respondeu logo as minhas mensagens e tirou todas as minhas dúvidas. Mandei a arte do jeito que queria e prontamente ela me atendeu. Depois fiz mais uma compra pra aumentar as unidades e mesmo assim ela conseguiu me enviar na data que seria a primeira. As peças ficaram lindas,do jeitinho que eu queria. Ela ainda me enviou um mimo e um recadinho agradecendo. Mas eu que quero agradecer toda a atenção e cuidado com o meu pedido. Super recomendo.",
+    "imagem": "avaliacoes/avaliacao_3.jpg",
+    "link": "https://www.elo7.com.br/brinde-brinco-dia-das-mulheres-lembrancinhas-do-dia-das-mulheres-na-minha-igreja/av/7E0C4F4?utm_source=copy&utm_medium=feedback",
+    "criado_em": "2026-03-23T19:39:38.212Z"
+  }
+},
+{
+  "model": "core.avaliacao",
+  "pk": 4,
+  "fields": {
+    "produto": null,
+    "titulo": "Raquel da Fonseca Cantarino avaliou Brindes Card e Bala: Dia das Mulheres - Dia Internacional das Mulheres.",
+    "descricao": "Atendimento exemplar!",
+    "imagem": "avaliacoes/avaliacao_4.jpg",
+    "link": "https://www.elo7.com.br/brindes-card-e-bala-dia-das-mulheres-dia-internacional-das-mulheres/av/7E0D9A8?utm_source=copy&utm_medium=feedback",
+    "criado_em": "2026-03-23T19:39:56.028Z"
+  }
+},
+{
+  "model": "core.avaliacao",
+  "pk": 5,
+  "fields": {
+    "produto": null,
+    "titulo": "ADELAIDE DOS SANTOS CORRÊA DA SILVA avaliou 100 Cards e Balas: Dia das Mães - Dinâmica c alunos.",
+    "descricao": "Muito lindo",
+    "imagem": "avaliacoes/avaliacao_5.jpg",
+    "link": "https://www.elo7.com.br/100-cards-e-balas-dia-das-maes-dinamica-c-alunos/av/7DCC072?utm_source=copy&utm_medium=feedback",
+    "criado_em": "2026-03-23T19:40:13.136Z"
+  }
+},
+{
+  "model": "core.avaliacao",
+  "pk": 6,
+  "fields": {
+    "produto": null,
+    "titulo": "Roseane Monteiro avaliou Brinde Personalizado: Imã Calendário 2026 - Lembrancinha de grupo de mulheres.",
+    "descricao": "Excelente, obrigada pelo mimo.",
+    "imagem": "avaliacoes/avaliacao_6.jpg",
+    "link": "https://www.elo7.com.br/brinde-personalizado-ima-calendario-2026-lembrancinha-de-grupo-de-mulheres/av/7D88144?utm_source=copy&utm_medium=feedback",
+    "criado_em": "2026-03-23T19:40:29.923Z"
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$t7er5h68eiDaBP4jRYfGG3$FgucWvbmvAavhx90M3lJ4NG1DyneHg2urHhSNuA/zTA=",
+    "last_login": "2026-09-25T07:08:17.646Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-03-23T19:02:55.026Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

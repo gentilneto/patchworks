@@ -1,151 +1,116 @@
-# Manual de manutenção — Patch Works e Afins
+# Manual de manutenção — Patch Works e Afins (v2.0)
 
-Guia prático para manter o site no dia a dia (desenvolvimento local).
+Guia prático para manter o site (desenvolvimento local / equipe acadêmica).
+
+**Repositório:** https://github.com/gentilneto/patchworks  
+**Branch principal:** `main` (v2.0) · **Arquivo v1:** branch `v1.0`
 
 ---
 
 ## 1. O que é este projeto
 
-Catálogo online Django da loja **Patch Works e Afins**:
+Catálogo Django da loja **Patch Works e Afins**:
 
-- Páginas: Início, Produtos, Avaliações, Contato
-- Admin Django para produtos e avaliações
-- Banco **MySQL**
-- Cotação de frete via **Melhor Envio** + validação de CEP via **ViaCEP**
-
-Estrutura principal:
+- Páginas: Início, Produtos, Avaliações, Contato  
+- Admin para produtos e avaliações  
+- Banco **MySQL**  
+- Cotação **Melhor Envio** + CEP **ViaCEP**
 
 ```
 patchworks/
 ├── manage.py
-├── .env                 # segredos (não versionar)
-├── melhorenvio_token.json  # token OAuth (não versionar)
+├── .env.example          # modelo — copie para .env
+├── data/fixture_inicial.json
 ├── requirements.txt
-├── core/                # app principal
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── admin.py
-│   ├── services/        # Melhor Envio + ViaCEP
-│   ├── templates/core/
-│   └── static/core/
-└── patchworks/
-    └── settings.py
+├── core/
+├── docs/
+├── media/
+└── patchworks/settings.py
 ```
 
 ---
 
-## 2. Como subir o ambiente (checklist)
+## 2. Setup completo (nova máquina)
 
-### 2.1 Uma vez (já feito na máquina atual)
-
-1. Python + venv em `venv/`
-2. `pip install -r requirements.txt`
-3. MySQL 8.4 instalado, banco `patchworks`, usuário `patchworks`
-4. Arquivo `.env` preenchido (copie de `.env.example`)
-
-### 2.2 Toda vez que reiniciar o PC
-
-O site **não** fica no ar sozinho. Precisa:
+Ver também [GUIA_EQUIPE.md](GUIA_EQUIPE.md).
 
 ```powershell
-# 1) MySQL (se não estiver como serviço Windows)
-& "C:\Program Files\MySQL\MySQL Server 8.4\bin\mysqld.exe" --defaults-file="C:\ProgramData\MySQL\MySQL Server 8.4\my.ini"
-
-# 2) Django
-cd C:\Projetos\patchworks
+git clone https://github.com/gentilneto/patchworks.git
+cd patchworks
+python -m venv venv
 .\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+copy .env.example .env
+# Editar .env (MySQL)
+
+# MySQL: criar database/user (ver GUIA_EQUIPE)
+python manage.py migrate
+python manage.py loaddata data/fixture_inicial.json
+python manage.py createsuperuser
 python manage.py runserver
-
-# 3) (Opcional) Túnel HTTPS — só se precisar de callback OAuth público
-& "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url http://127.0.0.1:8000
 ```
-
-Acesso local: http://127.0.0.1:8000/  
-Admin: http://127.0.0.1:8000/admin/
 
 ---
 
-## 3. Banco de dados (MySQL)
+## 3. Banco MySQL
 
-| Item | Valor padrão |
-|------|----------------|
+| Item | Padrão sugerido |
+|------|-----------------|
 | Engine | `django.db.backends.mysql` |
 | Host | `127.0.0.1:3306` |
-| Database | `patchworks` |
-| Driver Python | PyMySQL |
+| Database / user | `patchworks` |
+| Driver | PyMySQL |
 
-**SQLite (`db.sqlite3`) não é mais usado pelo Django.**  
-O arquivo antigo pode existir na pasta só como backup histórico; o `settings.py` aponta exclusivamente para MySQL.
+**SQLite não é mais usado.** A v1 (com SQLite) ficou na branch `v1.0`.
 
 ### Comandos úteis
 
 ```powershell
 python manage.py migrate
-python manage.py createsuperuser
-python manage.py dumpdata core --indent 2 -o backup_core.json
+python manage.py dumpdata core auth.User --indent 2 -o data/backup_local.json
+python manage.py loaddata data/fixture_inicial.json
 ```
-
-### Cadastro de conteúdo
-
-Use o Admin:
-
-- **Categorias / Produtos / Imagens** — catálogo e cotação (preencha `altura_cm`, `largura_cm`, `comprimento_cm`, `peso_kg`)
-- **Avaliações** — depoimentos da página pública
 
 ---
 
-## 4. Variáveis importantes (`.env`)
+## 4. Variáveis (`.env`)
+
+Copie de `.env.example`. Principais:
 
 | Variável | Função |
 |----------|--------|
 | `MYSQL_*` | Conexão MySQL |
-| `STORE_CEP` | CEP de origem do frete (loja) |
+| `STORE_CEP` | Origem do frete |
 | `MELHOR_ENVIO_CLIENT_ID` / `SECRET` | App OAuth |
-| `MELHOR_ENVIO_REDIRECT_URI` | Callback HTTPS (túnel ou domínio) |
-| `MELHOR_ENVIO_BASE_URL` | Sandbox ou produção |
-| `DJANGO_ALLOWED_HOSTS` | Hosts aceitos (inclui domínio do túnel) |
-| `DJANGO_CSRF_TRUSTED_ORIGINS` | Origens HTTPS confiáveis |
+| `MELHOR_ENVIO_REDIRECT_URI` | Callback HTTPS |
+| `DJANGO_ALLOWED_HOSTS` | Hosts (túnel Cloudflare etc.) |
 
-Nunca commitar `.env` nem `melhorenvio_token.json`.
+Não versionar: `.env`, `melhorenvio_token.json`, `venv/`.
 
 ---
 
-## 5. Manutenção de UI
+## 5. Checklist de saúde
 
-| Pasta | Uso |
-|-------|-----|
-| `core/templates/core/` | HTML |
-| `core/static/core/css/` | Visual (design system em `style.css`) |
-| `core/static/core/js/` | Menu, reveal, modal, frete |
-
-Após mudar CSS/JS, use Ctrl+F5 no navegador se a página parecer “antiga”.
-
----
-
-## 6. Checklist rápido de saúde
-
-- [ ] MySQL escutando na porta 3306  
-- [ ] `python manage.py runserver` sem erro  
+- [ ] MySQL na porta 3306  
+- [ ] `runserver` sem erro  
 - [ ] `/` e `/produtos/` abrem  
-- [ ] Admin consegue editar produto  
-- [ ] Cotação de frete no modal responde (token válido)  
-- [ ] Se usar túnel: URL do Cloudflare ainda bate com `MELHOR_ENVIO_REDIRECT_URI`
+- [ ] Imagens do catálogo aparecem  
+- [ ] Cotação (se token configurado)  
 
 ---
 
-## 7. Problemas comuns
+## 6. Problemas comuns
 
-| Sintoma | O que checar |
-|---------|----------------|
-| Erro de conexão MySQL | `mysqld` rodando? senha no `.env`? |
-| Frete 503 / sem token | `melhorenvio_token.json` existe? Reautorizar em `/api/melhorenvio/autorizar/` |
-| DisallowedHost | Incluir o host do túnel em `DJANGO_ALLOWED_HOSTS` |
-| CSRF no frete | Abrir `/produtos/` antes (cookie CSRF) |
-| Imagens quebradas | Pasta `media/` e `DEBUG=True` (dev) |
+| Sintoma | Checar |
+|---------|--------|
+| Erro MySQL | serviço ligado? `.env`? |
+| Frete 503 | token / reautorizar OAuth |
+| DisallowedHost | host do túnel no `.env` |
+| Sem produtos | `loaddata data/fixture_inicial.json` |
 
 ---
 
-## 8. Próximo passo sugerido (produção)
+## 7. Produção (futuro)
 
-Para o site **não cair** ao desligar o PC: hospedar Django + MySQL em serviço contínuo (ex.: Render, Railway, VPS) e apontar domínio HTTPS. O túnel Cloudflare atual é só para desenvolvimento / OAuth sandbox.
+Hospedar Django + MySQL (Render/Railway/VPS) com HTTPS próprio.  
+O túnel Cloudflare é só para desenvolvimento / OAuth sandbox.

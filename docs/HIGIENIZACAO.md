@@ -1,6 +1,6 @@
-# Higienização do projeto (varredura)
+# Higienização do projeto (varredura) — v2.0
 
-Data da limpeza: 2026-09-25
+Branch principal: `main` (v2.0). Data da limpeza: 2026-09-25.
 
 ## Removido com segurança
 

@@ -1,0 +1,4 @@
+# Evitar dumps locais acidentais; fixture oficial é versionada.
+*.sql
+*.sql.gz
+backup_*.json

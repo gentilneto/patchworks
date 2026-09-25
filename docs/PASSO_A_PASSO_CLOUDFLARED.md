@@ -1,9 +1,9 @@
-# Passo a passo — instalar e usar o cloudflared
+# Passo a passo — instalar e usar o cloudflared (v2.0)
 
 O `cloudflared` cria um **túnel HTTPS** temporário da internet até o Django no seu PC  
 (`https://….trycloudflare.com` → `http://127.0.0.1:8000`).
 
-Útil para o Melhor Envio (callback OAuth exige HTTPS).
+Útil para o Melhor Envio (callback OAuth exige HTTPS). Ver também [MANUAL_CLOUDFLARE.md](MANUAL_CLOUDFLARE.md).
 
 ---
 

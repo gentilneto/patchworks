@@ -1,10 +1,12 @@
-# Manual Cloudflare Tunnel (trycloudflare)
+# Manual Cloudflare Tunnel (trycloudflare) — v2.0
 
-## 1. Para que serviu
+Instalação passo a passo: [PASSO_A_PASSO_CLOUDFLARED.md](PASSO_A_PASSO_CLOUDFLARED.md).
 
-O Melhor Envio **não aceita** callback OAuth em `http://127.0.0.1` (exige **HTTPS** público).
+## 1. Para que serviu / serve
 
-Em vez de publicar o Django na Vercel (pouco adequado para Django + MySQL), usamos um **túnel**:
+O Melhor Envio **não aceita** callback OAuth em `http://127.0.0.1` (exige **HTTPS**).
+
+Em vez de publicar o Django na Vercel, usamos um **túnel** no PC do desenvolvedor:
 
 ```
 Internet (HTTPS)  →  Cloudflare  →  seu PC (http://127.0.0.1:8000)

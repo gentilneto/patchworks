@@ -1,131 +1,182 @@
-# 🧵 Patch Works e Afins
+# 🧵 Patch Works e Afins — Versão 2.0
 
-**Versão 2.0** (branch `v2.0`) — evolução acadêmica da v1.0 disponível em `main`.
+Catálogo online de artesanato sob encomenda (projeto acadêmico).
 
-Projeto desenvolvido com **Python + Django** para criação de um catálogo online de produtos artesanais.
+**Branch principal:** `main` (= **v2.0**)  
+**Versão anterior:** branch `v1.0` (SQLite / layout antigo) — preservada no GitHub.
 
-A proposta do sistema é permitir a exposição de produtos, avaliações de clientes, cotação de frete e contato com o vendedor.
-
----
-
-## 🚀 Tecnologias utilizadas
-
-- ![Python](https://img.shields.io/badge/Python-3.x-blue)
-- ![Django](https://img.shields.io/badge/Django-Framework-green)
-- ![HTML](https://img.shields.io/badge/HTML-5-orange)
-- ![CSS](https://img.shields.io/badge/CSS-3-blue)
-- ![MySQL](https://img.shields.io/badge/MySQL-8-blue)
-- Melhor Envio (cotação de frete) + ViaCEP
+Repositório: https://github.com/gentilneto/patchworks
 
 ---
 
-## 📸 Funcionalidades
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-- ✅ Painel administrativo (Django Admin)  
-- ✅ Página inicial com apresentação da loja  
-- ✅ Menu de navegação (Início, Produtos, Avaliações, Contato)  
-- ✅ Sistema de avaliações com imagem + link externo 
-- ✅ Layout moderno e responsivo (identidade artesanal)
-- ✅ Banco MySQL
-- ✅ Cotação de frete (Melhor Envio) no modal do produto
-- ✅ Validação de CEP (ViaCEP)
-- ✅ Manuais em `docs/`
+## O que há na v2.0
 
-### Branches no GitHub
-
-| Branch | Versão |
-|--------|--------|
-| `main` | **1.0** (versão original) |
-| `v2.0` | **2.0** (MySQL, UX, Melhor Envio, docs) |
+- Catálogo com busca, categorias e modal de produto  
+- Avaliações e página de contato  
+- Identidade visual artesanal (UX/UI)  
+- Banco **MySQL**  
+- Cotação de frete (**Melhor Envio**) no modal  
+- Validação de CEP (**ViaCEP**)  
+- Admin Django  
+- Manuais em `docs/`  
+- Dados de exemplo em `data/fixture_inicial.json`  
+- Mídias em `media/`
 
 ---
-### 📖 Bibliografia
 
-1. MENEZES, Nilo. *Introdução à Programação com Python: Algoritmos e lógica de programação para iniciantes*. 4. ed. São Paulo: Novatec, 2024.
+## Tecnologias
 
-2. SILBERSCHATZ, Abraham; KORTH, Henry F.; SUDARSHAN, S. *Sistemas de Banco de Dados*. 6. ed. Rio de Janeiro: Elsevier, 2012.  
-   Disponível em: https://integrada.minhabiblioteca.com.br/reader/books/9788595157552
+| Camada | Tecnologia |
+|--------|------------|
+| Backend | Python 3 + Django 6 |
+| Banco | MySQL 8 |
+| Front | HTML / CSS / JS |
+| Frete | Melhor Envio API (sandbox/produção) |
+| CEP | ViaCEP |
 
-3. GAMMA, Erich; HELM, Richard; JOHNSON, Ralph; VLISSIDES, John. *Padrões de Projeto: Soluções reutilizáveis de software orientado a objetos*. Porto Alegre: Bookman, 2000.  
-   Disponível em: https://integrada.minhabiblioteca.com.br/reader/books/9788577800469
+---
 
-4. DJANGO SOFTWARE FOUNDATION. *Documentação oficial do Django*.  
-   Disponível em: https://docs.djangoproject.com/pt-br/  
-   Acesso em: 2026.
+## Branches
 
-5. MOZILLA FOUNDATION. *MDN Web Docs: HTML e CSS*.  
-   Disponível em: https://developer.mozilla.org/pt-BR/  
-   Acesso em: 2026.
-
-6. SOMMERVILLE, Ian. *Engenharia de Software*. 8. ed. São Paulo: Pearson, 2007.  
-   Disponível em: https://plataforma.bvirtual.com.br/Acervo/Publicacao/276
-
-7. W3SCHOOLS. *Django Tutorial*.  
-   Disponível em: https://www.w3schools.com/django/django_intro.php
-
-8. SILVA, Tiago. *Django de A a Z: crie aplicações web rápidas, seguras e escaláveis com Python*. 9. ed. São Paulo: Casa do Código, 2021.  
-   Disponível em: https://plataforma.bvirtual.com.br  
-   Acesso em: 23 mar 2026.
-
-9. BHARGAVA, Aditya Y. *Entendendo Algoritmos: Um guia ilustrado para programadores e outros curiosos*. 1. ed. São Paulo: Novatec, 2015.
-
-## ⚙️ Como rodar o projeto
-
-### 1. Clonar repositório
+| Branch | Conteúdo |
+|--------|----------|
+| **`main`** | **v2.0 (atual / principal)** |
+| `v1.0` | Versão 1.0 original (não apagada) |
+| `v2.0` | Espelho da v2 (opcional; use `main`) |
 
 ```bash
-git clone https://github.com/Gentilneto/patchworks.git
+# Clonar a versão atual (v2)
+git clone https://github.com/gentilneto/patchworks.git
 cd patchworks
 
-2. Criar ambiente virtual
-	python -m venv venv
+# Se precisar da v1 antiga:
+git checkout v1.0
+```
 
-Ativar o venv
-venv\Scripts\activate   # Windows
+---
 
-3. Instalar a dependência 
-	pip install django
+## Como rodar (equipe)
 
-4. rodas as migrações
-	python manage.py migrate
+### Pré-requisitos
 
-5. Criar user admin
-	python manage.py createsuperuser
+- Python 3.12+ (ou 3.14)  
+- MySQL 8.x rodando localmente  
+- Conta Melhor Envio **Sandbox** (para frete)
 
-6. Rodar o server
-	python manage.py runserver
+### Passos
 
-acessar via 
-	http://127.0.0.1:8000/admin
+```bash
+git clone https://github.com/gentilneto/patchworks.git
+cd patchworks
 
-Estrutura do projeto 
+python -m venv venv
 
-	core/
-	 ├── models.py
- 	 ├── views.py
-	 ├── templates/
- 	 ├── static/
+# Windows
+venv\Scripts\activate
 
-	patchworks/
- 	 ├── settings.py
- 	 ├── urls.py
+# Linux/macOS
+# source venv/bin/activate
 
-	manage.py
+pip install -r requirements.txt
 
-📌 Manuais de manutenção
-  docs/README.md — índice
-  docs/MANUAL_MANUTENCAO.md
-  docs/MANUAL_API.md
-  docs/MANUAL_MELHOR_ENVIO.md
-  docs/MANUAL_CLOUDFLARE.md
+# Configurar ambiente
+copy .env.example .env   # Windows
+# cp .env.example .env   # Linux/macOS
+# Edite .env (MySQL + Melhor Envio)
+```
 
-📌 Próximas melhorias
-  Cadastro de produtos via admin
-  Upload de imagens com armazenamento persistente
-  Deploy em produção (Render/Railway/VPS)
-  Melhorias no design (UI/UX)
-  integração com banco mysql
-  renovação automática do refresh_token Melhor Envio
+### Banco MySQL
+
+1. Crie o banco e o usuário (ajuste senha se quiser):
+
+```sql
+CREATE DATABASE IF NOT EXISTS patchworks CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER IF NOT EXISTS 'patchworks'@'localhost' IDENTIFIED BY 'patchworks123';
+GRANT ALL PRIVILEGES ON patchworks.* TO 'patchworks'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+2. Migre e carregue os dados de exemplo:
+
+```bash
+python manage.py migrate
+python manage.py loaddata data/fixture_inicial.json
+python manage.py createsuperuser
+```
+
+### Servidor
+
+```bash
+python manage.py runserver
+```
+
+- Site: http://127.0.0.1:8000/  
+- Admin: http://127.0.0.1:8000/admin/
+
+### Melhor Envio (cotação)
+
+1. Cadastre um app em **Integrações → Área Dev.** (sandbox)  
+2. Preencha `MELHOR_ENVIO_CLIENT_ID`, `CLIENT_SECRET` e `REDIRECT_URI` no `.env`  
+3. Callback precisa de **HTTPS** (use Cloudflare Tunnel — ver `docs/PASSO_A_PASSO_CLOUDFLARED.md`)  
+4. Autorize: http://127.0.0.1:8000/api/melhorenvio/autorizar/  
+
+Detalhes: `docs/MANUAL_MELHOR_ENVIO.md`
+
+---
+
+## Estrutura
 
 ```
-⚠️ Este repositório contém banco e mídias apenas para fins acadêmicos e colaboração em equipe.
+patchworks/
+├── core/                 # App Django (models, views, templates, static, services)
+├── patchworks/           # Settings / URLs do projeto
+├── media/                # Imagens de produtos e avaliações
+├── data/                 # Fixture Django para a equipe
+├── docs/                 # Manuais de manutenção
+├── .env.example          # Modelo de configuração (copie para .env)
+├── requirements.txt
+├── breagnote.md          # Pitch do produto
+└── manage.py
+```
+
+---
+
+## Manuais
+
+| Arquivo | Assunto |
+|---------|---------|
+| [docs/README.md](docs/README.md) | Índice |
+| [docs/MANUAL_MANUTENCAO.md](docs/MANUAL_MANUTENCAO.md) | Manutenção / setup |
+| [docs/MANUAL_API.md](docs/MANUAL_API.md) | Rotas e APIs |
+| [docs/MANUAL_MELHOR_ENVIO.md](docs/MANUAL_MELHOR_ENVIO.md) | Frete / OAuth |
+| [docs/PASSO_A_PASSO_CLOUDFLARED.md](docs/PASSO_A_PASSO_CLOUDFLARED.md) | Túnel HTTPS |
+| [docs/MANUAL_CLOUDFLARE.md](docs/MANUAL_CLOUDFLARE.md) | Conceito do túnel |
+| [docs/HIGIENIZACAO.md](docs/HIGIENIZACAO.md) | Limpeza do projeto |
+| [docs/GUIA_EQUIPE.md](docs/GUIA_EQUIPE.md) | Onboarding dos integrantes |
+
+---
+
+## Segurança (importante para o time)
+
+**Não versionamos** (e não devem ir para o Git):
+
+- `.env` (senhas / tokens reais)  
+- `melhorenvio_token.json`  
+- `venv/`  
+
+Cada integrante usa o próprio `.env` a partir do `.env.example` e gera o próprio token Melhor Envio.
+
+---
+
+## Bibliografia
+
+1. MENEZES, Nilo. *Introdução à Programação com Python*. 4. ed. Novatec, 2024.  
+2. SILBERSCHATZ et al. *Sistemas de Banco de Dados*. 6. ed. Elsevier, 2012.  
+3. GAMMA et al. *Padrões de Projeto*. Bookman, 2000.  
+4. Django Software Foundation. Documentação oficial — https://docs.djangoproject.com/pt-br/  
+5. MDN Web Docs — https://developer.mozilla.org/pt-BR/  
+6. Melhor Envio — https://docs.melhorenvio.com.br/  
+
+---
+
+⚠️ Mídias e fixture são para fins acadêmicos e colaboração em equipe.
