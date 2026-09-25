@@ -1,0 +1,58 @@
+/* =========================
+   Avaliações
+========================= */
+.avaliacoes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.avaliacao-card {
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.3s var(--ease);
+}
+
+.avaliacao-card:hover {
+    transform: translateY(-3px);
+}
+
+.avaliacao-img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+}
+
+.avaliacao-info h2 {
+    font-family: var(--font-display);
+    margin: 0 0 8px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+}
+
+.avaliacao-info p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+}
+
+.avaliacao-acao {
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .avaliacao-img {
+        height: 200px;
+    }
+}

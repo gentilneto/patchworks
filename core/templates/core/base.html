@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Patch Works e Afins{% endblock %}</title>
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<header class="site-header">
+    <a href="{% url 'home' %}" class="brand">
+        <img src="{% static 'core/logo.png' %}" alt="Patch Works e Afins" class="brand-logo">
+        <span class="brand-name">Patch Works e Afins</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" data-nav-toggle>
+        <span></span><span></span>
+    </button>
+
+    <nav class="site-nav" data-nav>
+        <a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="is-active"{% endif %}>Início</a>
+        <a href="{% url 'produtos' %}" {% if request.resolver_match.url_name == 'produtos' %}class="is-active"{% endif %}>Produtos</a>
+        <a href="{% url 'avaliacoes' %}" {% if request.resolver_match.url_name == 'avaliacoes' %}class="is-active"{% endif %}>Avaliações</a>
+        <a href="{% url 'contato' %}" {% if request.resolver_match.url_name == 'contato' %}class="is-active"{% endif %}>Contato</a>
+    </nav>
+</header>
+
+<main>
+    {% block full_width %}{% endblock %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="{% static 'core/logo.png' %}" alt="" class="footer-logo">
+            <div>
+                <strong>Patch Works e Afins</strong>
+                <p>Artesanato sob encomenda, feito com carinho em Guarulhos.</p>
+            </div>
+        </div>
+        <div class="footer-meta">
+            <p>Av. Dr. Timóteo Penteado, 1874 — Vila Hulda</p>
+            <p>Guarulhos/SP · CEP 07094-000</p>
+            <p>Resposta em até 48h úteis</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'core/js/site.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

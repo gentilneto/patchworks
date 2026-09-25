@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Avaliações — Patch Works e Afins{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/avaliacoes.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="container">
+        <header class="page-header reveal">
+            <h1>Avaliações</h1>
+            <p>Depoimentos de quem já recebeu nossas peças artesanais.</p>
+        </header>
+
+        <div class="avaliacoes-grid">
+            {% for item in avaliacoes %}
+                <article class="avaliacao-card reveal">
+                    <img src="{{ item.imagem.url }}" alt="{{ item.titulo }}" class="avaliacao-img">
+                    <div class="avaliacao-info">
+                        <h2>{{ item.titulo }}</h2>
+                        <p>{{ item.descricao }}</p>
+                    </div>
+                    <div class="avaliacao-acao">
+                        <a href="{{ item.link }}" target="_blank" rel="noopener" class="btn btn-secondary">Ver mais</a>
+                    </div>
+                </article>
+            {% empty %}
+                <p class="mensagem-vazia">Ainda não há avaliações cadastradas.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

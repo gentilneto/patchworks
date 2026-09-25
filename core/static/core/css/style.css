@@ -1,0 +1,411 @@
+/* =========================
+   Design system — Patch Works
+   Artesanato quente + tipografia expressiva
+========================= */
+:root {
+    --ink: #1f1a17;
+    --ink-soft: #5c534c;
+    --paper: #fffdf9;
+    --bg: #ede6dc;
+    --bg-deep: #d9cfc0;
+    --accent: #2f5d50;
+    --accent-hover: #244a40;
+    --copper: #b85c38;
+    --line: #d5cbbe;
+    --shadow: 0 12px 32px rgba(31, 26, 23, 0.08);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Outfit", system-ui, sans-serif;
+    --header-h: 76px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(47, 93, 80, 0.08), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(184, 92, 56, 0.07), transparent 50%),
+        var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+/* =========================
+   Header
+========================= */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: var(--header-h);
+    padding: 12px 28px;
+    background: rgba(255, 253, 249, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(213, 203, 190, 0.7);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--ink);
+}
+
+.brand-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.brand-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.site-nav a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: color 0.25s var(--ease), background 0.25s var(--ease);
+}
+
+.site-nav a:hover,
+.site-nav a.is-active {
+    color: var(--accent);
+    background: rgba(47, 93, 80, 0.1);
+}
+
+.nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform 0.3s var(--ease);
+}
+
+/* =========================
+   Layout
+========================= */
+.container {
+    width: min(1100px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.page-shell {
+    padding: 48px 0 72px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.page-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    margin: 0 0 10px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+}
+
+.page-header p {
+    margin: 0 auto;
+    max-width: 520px;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+}
+
+/* =========================
+   Buttons
+========================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: none;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(47, 93, 80, 0.25);
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+}
+
+.btn-secondary:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-ghost {
+    background: rgba(255, 253, 249, 0.9);
+    color: var(--ink);
+}
+
+.btn-ghost:hover {
+    background: #fff;
+}
+
+/* =========================
+   Footer
+========================= */
+.site-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    background: rgba(255, 253, 249, 0.7);
+    padding: 40px 28px;
+}
+
+.footer-inner {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    max-width: 420px;
+}
+
+.footer-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.footer-brand strong {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.footer-brand p,
+.footer-meta p {
+    margin: 0 0 4px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+}
+
+/* =========================
+   Contato
+========================= */
+.contato-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.contato-box,
+.contato-aside {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+}
+
+.contato-box h2,
+.contato-aside h2 {
+    font-family: var(--font-display);
+    margin: 0 0 18px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.contato-lista {
+    margin: 0;
+    display: grid;
+    gap: 16px;
+}
+
+.contato-lista div {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+}
+
+.contato-lista div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.contato-lista dt {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+}
+
+.contato-lista dd {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.contato-aside p {
+    margin: 0 0 14px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+}
+
+.contato-note {
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 0.92rem !important;
+}
+
+@media (max-width: 768px) {
+    .contato-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   Reveal motion
+========================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+    }
+
+    .brand-name {
+        font-size: 1rem;
+        max-width: 160px;
+    }
+
+    .nav-toggle {
+        display: flex;
+        margin-left: auto;
+    }
+
+    .site-nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 8px 0 12px;
+    }
+
+    .site-nav.is-open {
+        display: flex;
+    }
+
+    .site-nav a {
+        padding: 12px 14px;
+    }
+
+    .container {
+        width: min(1100px, calc(100% - 28px));
+    }
+
+    .page-shell {
+        padding: 32px 0 56px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+    }
+}

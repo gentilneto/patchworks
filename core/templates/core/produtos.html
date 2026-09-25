@@ -1,0 +1,230 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Produtos — Patch Works e Afins{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/produtos.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="container">
+        {% csrf_token %}
+        <header class="page-header reveal">
+            <h1>Produtos</h1>
+            <p>Brindes e lembranças artesanais feitos sob encomenda.</p>
+        </header>
+
+        <form method="get" class="filtro-produtos-form reveal">
+            <input
+                type="text"
+                name="busca"
+                placeholder="Buscar produto..."
+                value="{{ busca }}"
+                class="campo-busca-produto"
+                aria-label="Buscar produto"
+            >
+
+            <select name="categoria" class="select-categoria-produto" aria-label="Categoria">
+                <option value="">Todas as categorias</option>
+                {% for cat in categorias %}
+                    <option value="{{ cat.id }}" {% if categoria_id == cat.id|stringformat:"s" %}selected{% endif %}>
+                        {{ cat.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn btn-primary btn-buscar-produto">Buscar</button>
+        </form>
+
+        <div class="produtos-container">
+            {% for produto in produtos %}
+                <article class="produto-card reveal" onclick="abrirModal('modal{{ produto.id }}')" role="button" tabindex="0" onkeydown="if(event.key==='Enter')abrirModal('modal{{ produto.id }}')">
+                    <div class="produto-card-imagem-wrap">
+                        {% if produto.tem_desconto and produto.preco_desconto %}
+                            <span class="badge-desconto-pix">Desconto PIX</span>
+                        {% endif %}
+                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-card-img">
+                    </div>
+
+                    <div class="produto-info">
+                        <h2 class="produto-titulo">{{ produto.nome }}</h2>
+
+                        {% if produto.tem_desconto and produto.preco_desconto %}
+                            <div class="produto-preco-bloco">
+                                <div class="linha-desconto-topo">
+                                    <span class="desconto-badge">{{ produto.porcentagem_desconto }}% off</span>
+                                    <span class="preco-antigo-topo">R$ {{ produto.preco }}</span>
+                                </div>
+                                <div class="preco-novo-destaque">
+                                    R$ {{ produto.preco_desconto }} <span class="pix-label">no pix</span>
+                                </div>
+                                <div class="preco-secundario">R$ {{ produto.preco }} no cartão</div>
+                            </div>
+                        {% else %}
+                            <div class="produto-preco-bloco">
+                                <div class="preco-novo-destaque">R$ {{ produto.preco }}</div>
+                            </div>
+                        {% endif %}
+
+                        {% if produto.quantidade_minima %}
+                            <div class="produto-compra-minima">
+                                Compra mínima: {{ produto.quantidade_minima }} unidades
+                            </div>
+                        {% endif %}
+
+                        {% if produto.prazo_dias_uteis %}
+                            <div class="produto-observacao">
+                                Feito sob encomenda · pronto em até {{ produto.prazo_dias_uteis }} dias úteis
+                            </div>
+                        {% endif %}
+                    </div>
+                </article>
+            {% empty %}
+                <p class="mensagem-vazia">Ainda não há produtos cadastrados.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% for produto in produtos %}
+        <div id="modal{{ produto.id }}" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-{{ produto.id }}">
+            <div class="modal-content">
+                <h3 class="modal-titulo" id="titulo-modal-{{ produto.id }}">{{ produto.nome }}</h3>
+
+                <div class="produto-topo-modal">
+                    <div class="galeria">
+                        <img
+                            src="{{ produto.imagem.url }}"
+                            alt="{{ produto.nome }}"
+                            class="galeria-img ativa"
+                            onclick="trocarImagem('{{ produto.id }}', this)"
+                        >
+                        {% for img in produto.imagens.all %}
+                            <img
+                                src="{{ img.imagem.url }}"
+                                alt="Imagem adicional de {{ produto.nome }}"
+                                class="galeria-img"
+                                onclick="trocarImagem('{{ produto.id }}', this)"
+                            >
+                        {% endfor %}
+                    </div>
+
+                    <div class="imagem-principal-container">
+                        <img
+                            src="{{ produto.imagem.url }}"
+                            alt="{{ produto.nome }}"
+                            class="modal-img"
+                            id="imagem-principal-{{ produto.id }}"
+                        >
+                    </div>
+                </div>
+
+                <div class="produto-preco-modal">
+                    {% if produto.tem_desconto and produto.preco_desconto %}
+                        <div class="linha-desconto-topo">
+                            <span class="desconto-badge">{{ produto.porcentagem_desconto }}% off</span>
+                            <span class="preco-antigo-topo">R$ {{ produto.preco }}</span>
+                        </div>
+                        <div class="preco-novo-modal">
+                            R$ {{ produto.preco_desconto }} <span class="pix-label">no pix</span>
+                        </div>
+                        <div class="preco-secundario">R$ {{ produto.preco }} no cartão de crédito</div>
+                    {% else %}
+                        <div class="preco-normal-modal">R$ {{ produto.preco }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="produto-bloco-info">
+                    <h4>Descrição</h4>
+                    <p class="produto-descricao">{{ produto.descricao }}</p>
+
+                    <div class="produto-detalhes">
+                        <div class="detalhe-item">
+                            <strong>Medidas (A × L × C)</strong>
+                            <span>{{ produto.medidas|default:"—" }}</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <strong>Peso</strong>
+                            <span>{{ produto.peso|default:"—" }}</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <strong>Código</strong>
+                            <span>{{ produto.codigo }}</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <strong>Publicado em</strong>
+                            <span>{{ produto.publicado_em|date:"d/m/Y"|default:"—" }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="produto-info-extra-modal">
+                    {% if produto.quantidade_minima %}
+                        <div class="produto-compra-minima">
+                            Compra mínima: {{ produto.quantidade_minima }} unidades
+                        </div>
+                    {% endif %}
+                    {% if produto.prazo_dias_uteis %}
+                        <div class="produto-observacao">
+                            Feito sob encomenda · pronto em até {{ produto.prazo_dias_uteis }} dias úteis
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="frete-box" data-frete-box data-produto-id="{{ produto.id }}" data-qtd-minima="{{ produto.quantidade_minima|default:1 }}">
+                    <h4>Calcular frete</h4>
+                    <p class="frete-origem">Enviamos de Guarulhos/SP · CEP 07094-000</p>
+
+                    <div class="frete-form">
+                        <label class="frete-field">
+                            <span>CEP de destino</span>
+                            <input
+                                type="text"
+                                inputmode="numeric"
+                                maxlength="9"
+                                placeholder="00000-000"
+                                class="frete-cep"
+                                data-frete-cep
+                                autocomplete="postal-code"
+                            >
+                        </label>
+                        <label class="frete-field frete-field-qtd">
+                            <span>Qtd</span>
+                            <input
+                                type="number"
+                                min="{{ produto.quantidade_minima|default:1 }}"
+                                value="{{ produto.quantidade_minima|default:1 }}"
+                                class="frete-qtd"
+                                data-frete-qtd
+                            >
+                        </label>
+                        <button type="button" class="btn btn-primary frete-btn" data-frete-btn>
+                            Calcular
+                        </button>
+                    </div>
+
+                    <p class="frete-endereco" data-frete-endereco hidden></p>
+                    <p class="frete-status" data-frete-status hidden></p>
+                    <ul class="frete-opcoes" data-frete-opcoes></ul>
+                </div>
+
+                <div class="acoes-modal">
+                    {% if produto.whatsapp_numero %}
+                        <a class="btn-whatsapp" href="{{ produto.whatsapp_link }}" target="_blank" rel="noopener">
+                            Falar no WhatsApp
+                        </a>
+                    {% endif %}
+                    <button type="button" class="btn-fechar" onclick="fecharModal('modal{{ produto.id }}')">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'core/js/produtos.js' %}"></script>
+{% endblock %}

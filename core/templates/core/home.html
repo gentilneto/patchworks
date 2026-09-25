@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Patch Works e Afins — Artesanato sob encomenda{% endblock %}
+{% block body_class %}page-home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+{% endblock %}
+
+{% block full_width %}
+<section class="home-hero">
+    <div class="home-hero-media" aria-hidden="true">
+        <img src="{% static 'core/img/fundo.png' %}" alt="">
+        <div class="home-hero-veil"></div>
+    </div>
+
+    <div class="home-hero-content">
+        <img src="{% static 'core/logo.png' %}" alt="Patch Works e Afins" class="home-hero-logo">
+        <h1 class="home-hero-brand">Patch Works e Afins</h1>
+        <p class="home-hero-lead">Peças sob encomenda que transformam momentos em lembranças.</p>
+        <div class="home-hero-actions">
+            <a href="{% url 'produtos' %}" class="btn btn-primary">Ver catálogo</a>
+            <a href="{% url 'contato' %}" class="btn btn-ghost">Fale conosco</a>
+        </div>
+    </div>
+</section>
+
+<section class="home-section home-story reveal">
+    <div class="container home-story-grid">
+        <div>
+            <h2>Nossa história</h2>
+            <p>
+                A Patch Works e Afins nasceu em um momento desafiador.
+                Em meio à escassez de trabalho na pandemia, encontramos no artesanato
+                uma forma de seguir em frente.
+            </p>
+            <p>
+                O que começou como alternativa para ajudar em casa se transformou em
+                aprendizado, evolução e propósito: transformar ideias e sentimentos
+                em lembranças especiais.
+            </p>
+        </div>
+        <aside class="home-story-aside">
+            <p>Feito à mão, sob encomenda, com atendimento humano até o pedido.</p>
+        </aside>
+    </div>
+</section>
+
+<section class="home-section home-process reveal">
+    <div class="container">
+        <h2>Como trabalhamos</h2>
+        <ol class="home-process-list">
+            <li>
+                <strong>Produção sob encomenda</strong>
+                <span>Sem estoque pronto — cada pedido é feito conforme a sua necessidade.</span>
+            </li>
+            <li>
+                <strong>Prazos claros</strong>
+                <span>O tempo varia com a demanda e com a produção junto aos fornecedores.</span>
+            </li>
+            <li>
+                <strong>Atendimento em até 48h</strong>
+                <span>Respondemos em até 48 horas úteis. Se houver urgência, fale conosco.</span>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="home-section home-close reveal">
+    <div class="container home-close-box">
+        <h2>Entre, conheça e escolha</h2>
+        <p>Cada encomenda continua uma história feita com coragem, trabalho e esperança.</p>
+        <a href="{% url 'produtos' %}" class="btn btn-primary">Explorar catálogo</a>
+    </div>
+</section>
+{% endblock %}
