@@ -2,8 +2,25 @@ from django.contrib import admin
 # importa o painel administrativo do Django
 from django.utils.html import format_html
 # permite usar HTML dentro do admin (ex: mostrar imagem)
-from .models import Avaliacao, Produto, ProdutoImagem, Categoria
+from .models import Avaliacao, ConfiguracaoLoja, Produto, ProdutoImagem, Categoria
 # importa os models do app core
+
+
+@admin.register(ConfiguracaoLoja)
+class ConfiguracaoLojaAdmin(admin.ModelAdmin):
+    list_display = ('cep', 'endereco', 'atualizado_em')
+    fields = ('cep', 'endereco', 'atualizado_em')
+    readonly_fields = ('atualizado_em',)
+
+    def has_add_permission(self, request):
+        return not ConfiguracaoLoja.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def changelist_view(self, request, extra_context=None):
+        ConfiguracaoLoja.get_solo()
+        return super().changelist_view(request, extra_context=extra_context)
 
 
 class ProdutoImagemInline(admin.TabularInline):

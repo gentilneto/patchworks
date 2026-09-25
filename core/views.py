@@ -1,13 +1,11 @@
 import json
-import re
 
-from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
-from .models import Avaliacao, Produto, Categoria
+from .models import Avaliacao, ConfiguracaoLoja, Produto, Categoria
 from .services.melhor_envio import (
     MelhorEnvioError,
     build_authorize_url,
@@ -40,12 +38,14 @@ def produtos(request):
         produtos = produtos.filter(categoria_id=categoria_id)
 
     categorias = Categoria.objects.all().order_by('nome')
+    loja = ConfiguracaoLoja.get_solo()
 
     return render(request, 'core/produtos.html', {
         'produtos': produtos,
         'categorias': categorias,
         'busca': busca,
         'categoria_id': categoria_id,
+        'loja': loja,
     })
 
 
@@ -141,7 +141,7 @@ def api_cotar_frete(request):
     return JsonResponse({
         'ok': True,
         'endereco': endereco,
-        'origem_cep': re.sub(r'\D', '', str(settings.STORE_CEP)),
+        'origem_cep': ConfiguracaoLoja.get_solo().cep_digitos,
         'produto': {
             'id': produto.id,
             'nome': produto.nome,

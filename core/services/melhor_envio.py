@@ -140,9 +140,19 @@ def _headers():
     }
 
 
+def _cep_origem_loja() -> str:
+    """CEP de origem: Admin (Configuração da loja) com fallback para .env."""
+    from core.models import ConfiguracaoLoja
+
+    try:
+        return ConfiguracaoLoja.get_solo().cep_digitos
+    except Exception:
+        return ''.join(ch for ch in str(settings.STORE_CEP) if ch.isdigit())
+
+
 def calcular_frete_produtos(*, cep_destino: str, products: list[dict], services: str | None = None):
     """POST /api/v2/me/shipment/calculate"""
-    cep_origem = ''.join(ch for ch in str(settings.STORE_CEP) if ch.isdigit())
+    cep_origem = _cep_origem_loja()
     cep_destino = ''.join(ch for ch in str(cep_destino) if ch.isdigit())
 
     if len(cep_origem) != 8:

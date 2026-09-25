@@ -16,6 +16,7 @@ Repositório: https://github.com/gentilneto/patchworks
 - Identidade visual artesanal (UX/UI)  
 - Banco **MySQL**  
 - Cotação de frete (**Melhor Envio**) no modal  
+- Origem do frete editável no **Admin** (CEP + endereço)  
 - Validação de CEP (**ViaCEP**)  
 - Admin Django  
 - Manuais em `docs/`  

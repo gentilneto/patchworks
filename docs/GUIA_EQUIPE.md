@@ -33,8 +33,8 @@ copy .env.example .env
 
 Edite no mínimo:
 
-- `MYSQL_*` — usuário/senha do MySQL local  
-- `STORE_CEP` — CEP de origem da loja  
+- `MYSQL_*` — usuário/senha do MySQL da aplicação (não use root no Django)  
+- Origem do frete — preferir **Admin → Configuração da loja**; `STORE_CEP` no `.env` é só fallback  
 - `MELHOR_ENVIO_*` — se for testar frete (cada um pode usar a própria conta sandbox)
 
 **Nunca commite o `.env` nem o `melhorenvio_token.json`.**

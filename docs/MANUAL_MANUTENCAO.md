@@ -79,8 +79,8 @@ Copie de `.env.example`. Principais:
 
 | Variável | Função |
 |----------|--------|
-| `MYSQL_*` | Conexão MySQL |
-| `STORE_CEP` | Origem do frete |
+| `MYSQL_*` | Conexão MySQL (usuário da aplicação, **não** o root) |
+| `STORE_CEP` / `STORE_ADDRESS` | Fallback da origem do frete (preferir Admin → Configuração da loja) |
 | `MELHOR_ENVIO_CLIENT_ID` / `SECRET` | App OAuth |
 | `MELHOR_ENVIO_REDIRECT_URI` | Callback HTTPS |
 | `DJANGO_ALLOWED_HOSTS` | Hosts (túnel Cloudflare etc.) |

@@ -174,7 +174,7 @@
 
                 <div class="frete-box" data-frete-box data-produto-id="{{ produto.id }}" data-qtd-minima="{{ produto.quantidade_minima|default:1 }}">
                     <h4>Calcular frete</h4>
-                    <p class="frete-origem">Enviamos de Guarulhos/SP · CEP 07094-000</p>
+                    <p class="frete-origem">Enviamos de {{ loja.endereco }} · CEP {{ loja.cep_formatado }}</p>
 
                     <div class="frete-form">
                         <label class="frete-field">

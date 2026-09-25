@@ -65,7 +65,9 @@ No Admin, cada produto precisa de:
 
 O sistema aplica mínimos de embalagem se as medidas forem muito pequenas.
 
-Origem do frete: `STORE_CEP` (ex.: Guarulhos `07094-000`).
+Origem do frete: editável no **Admin → Configuração da loja** (CEP + endereço).  
+Fallback no `.env`: `STORE_CEP` / `STORE_ADDRESS` (ex.: Guarulhos `07094-000`).
+
 
 ---
 

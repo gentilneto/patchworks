@@ -1,8 +1,65 @@
+from django.conf import settings
 from django.db import models  # importa o módulo de modelos do Django (ORM)
 from urllib.parse import quote
 # Transforma a mensagem em formato válido para URL do zap
 import re
 # limpa o numero removendo - ( ) espaços etc
+
+
+class ConfiguracaoLoja(models.Model):
+    """Origem da loja (CEP/endereço) — editável no Admin (registro único)."""
+
+    cep = models.CharField(
+        'CEP de origem',
+        max_length=9,
+        help_text='CEP de onde saem os envios (ex.: 07094-000). Usado na cotação Melhor Envio.',
+    )
+    endereco = models.CharField(
+        'Endereço da loja',
+        max_length=255,
+        help_text='Endereço completo exibido e de referência da origem.',
+    )
+    atualizado_em = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Configuração da loja'
+        verbose_name_plural = 'Configuração da loja'
+
+    def __str__(self):
+        return f'Loja · CEP {self.cep_formatado}'
+
+    @property
+    def cep_digitos(self) -> str:
+        return re.sub(r'\D', '', str(self.cep or ''))
+
+    @property
+    def cep_formatado(self) -> str:
+        digitos = self.cep_digitos
+        if len(digitos) == 8:
+            return f'{digitos[:5]}-{digitos[5:]}'
+        return self.cep or ''
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        digitos = self.cep_digitos
+        if len(digitos) == 8:
+            self.cep = f'{digitos[:5]}-{digitos[5:]}'
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_solo(cls):
+        obj, _ = cls.objects.get_or_create(
+            pk=1,
+            defaults={
+                'cep': getattr(settings, 'STORE_CEP', '07094000'),
+                'endereco': getattr(
+                    settings,
+                    'STORE_ADDRESS',
+                    'Av. Dr. Timoteo Penteado, 1874 - Vila Hulda, Guarulhos - SP',
+                ),
+            },
+        )
+        return obj
 
 
 class Categoria(models.Model):
