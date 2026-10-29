@@ -13,6 +13,8 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 
+<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo principal</a>
+
 <header class="site-header">
     <a href="{% url 'home' %}" class="brand">
         <img src="{% static 'core/logo.png' %}" alt="Patch Works e Afins" class="brand-logo">
@@ -31,7 +33,7 @@
     </nav>
 </header>
 
-<main>
+<main id="conteudo-principal" tabindex="-1">
     {% block full_width %}{% endblock %}
     {% block content %}{% endblock %}
 </main>
@@ -46,8 +48,10 @@
             </div>
         </div>
         <div class="footer-meta">
-            <p>Av. Dr. Timóteo Penteado, 1874 — Vila Hulda</p>
-            <p>Guarulhos/SP · CEP 07094-000</p>
+            {% if loja %}
+                <p>{{ loja.endereco }}</p>
+                <p>CEP {{ loja.cep_formatado }}</p>
+            {% endif %}
             <p>Resposta em até 48h úteis</p>
         </div>
     </div>

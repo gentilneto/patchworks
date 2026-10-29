@@ -1,8 +1,22 @@
-function abrirModal(id) {
+let modalTrigger = null;
+const MODAL_FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function modalAberto() {
+    return Array.from(document.querySelectorAll('.modal')).find(function (modal) {
+        return modal.style.display === 'flex';
+    });
+}
+
+function abrirModal(id, trigger) {
     const modal = document.getElementById(id);
     if (modal) {
+        modalTrigger = trigger || document.activeElement;
+        modal.setAttribute('aria-hidden', 'false');
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        const closeButton = modal.querySelector('.btn-fechar');
+        if (closeButton) closeButton.focus();
+        else modal.focus();
     }
 }
 
@@ -10,24 +24,31 @@ function fecharModal(id) {
     const modal = document.getElementById(id);
     if (modal) {
         modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        if (modalTrigger && modalTrigger.isConnected) modalTrigger.focus();
+        modalTrigger = null;
     }
 }
 
 function trocarImagem(produtoId, miniatura) {
     const imagemPrincipal = document.getElementById(`imagem-principal-${produtoId}`);
+    const imagemMiniatura = miniatura.querySelector('.galeria-img');
+    if (!imagemMiniatura) return;
+
     if (imagemPrincipal) {
-        imagemPrincipal.src = miniatura.src;
+        imagemPrincipal.src = imagemMiniatura.src;
     }
 
     const galeria = miniatura.parentElement;
-    const miniaturas = galeria.querySelectorAll('.galeria-img');
+    const miniaturas = galeria.querySelectorAll('.galeria-thumb');
 
     miniaturas.forEach(function (img) {
-        img.classList.remove('ativa');
+        const ativa = img === miniatura;
+        img.setAttribute('aria-pressed', ativa ? 'true' : 'false');
+        const imagem = img.querySelector('.galeria-img');
+        if (imagem) imagem.classList.toggle('ativa', ativa);
     });
-
-    miniatura.classList.add('ativa');
 }
 
 window.addEventListener('click', function (event) {
@@ -35,20 +56,40 @@ window.addEventListener('click', function (event) {
 
     modais.forEach(function (modal) {
         if (event.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
+            fecharModal(modal.id);
         }
     });
 });
 
 window.addEventListener('keydown', function (event) {
-    if (event.key !== 'Escape') return;
-    document.querySelectorAll('.modal').forEach(function (modal) {
-        if (modal.style.display === 'flex') {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        }
+    const modal = modalAberto();
+    if (!modal) return;
+
+    if (event.key === 'Escape') {
+        fecharModal(modal.id);
+        return;
+    }
+
+    if (event.key !== 'Tab') return;
+    const focaveis = Array.from(modal.querySelectorAll(MODAL_FOCUSABLE)).filter(function (element) {
+        return !element.hidden && element.getClientRects().length > 0;
     });
+
+    if (!focaveis.length) {
+        event.preventDefault();
+        modal.focus();
+        return;
+    }
+
+    const primeiro = focaveis[0];
+    const ultimo = focaveis[focaveis.length - 1];
+    if (event.shiftKey && (document.activeElement === primeiro || !modal.contains(document.activeElement))) {
+        event.preventDefault();
+        ultimo.focus();
+    } else if (!event.shiftKey && (document.activeElement === ultimo || !modal.contains(document.activeElement))) {
+        event.preventDefault();
+        primeiro.focus();
+    }
 });
 
 function getCookie(name) {
@@ -83,7 +124,7 @@ function setFreteStatus(box, message, type) {
     if (!status) return;
     status.hidden = !message;
     status.textContent = message || '';
-    status.classList.remove('is-error', 'is-loading', 'is-ok');
+    status.classList.remove('is-error', 'is-loading', 'is-ok', 'is-simulated');
     if (type) status.classList.add(type);
 }
 
@@ -170,17 +211,31 @@ async function cotarFrete(box) {
                 ? `${opcao.delivery_time} dia(s) útil(eis)`
                 : 'Prazo sob consulta';
 
-            li.innerHTML = `
-                <div class="frete-opcao-main">
-                    <strong>${opcao.company || 'Transportadora'} — ${opcao.name || 'Serviço'}</strong>
-                    <span>${prazo}</span>
-                </div>
-                <div class="frete-opcao-preco">${formatMoney(opcao.price, opcao.currency)}</div>
-            `;
+            const main = document.createElement('div');
+            main.className = 'frete-opcao-main';
+
+            const name = document.createElement('strong');
+            name.textContent = `${opcao.company || 'Transportadora'} — ${opcao.name || 'Serviço'}`;
+
+            const delivery = document.createElement('span');
+            delivery.textContent = prazo;
+
+            const price = document.createElement('div');
+            price.className = 'frete-opcao-preco';
+            price.textContent = formatMoney(opcao.price, opcao.currency);
+
+            main.append(name, delivery);
+            li.append(main, price);
             lista.appendChild(li);
         });
 
-        setFreteStatus(box, `${data.opcoes.length} opção(ões) encontrada(s).`, 'is-ok');
+        setFreteStatus(
+            box,
+            data.simulado
+                ? data.aviso
+                : `${data.opcoes.length} opção(ões) encontrada(s).`,
+            data.simulado ? 'is-simulated' : 'is-ok'
+        );
         if (data.produto && data.produto.peso_total_kg != null) {
             const d = data.produto.dimensoes_unidade || {};
             const extra = document.createElement('p');
@@ -199,6 +254,18 @@ async function cotarFrete(box) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.produto-card[data-modal-id]').forEach(function (card) {
+        card.addEventListener('click', function () {
+            abrirModal(card.dataset.modalId, card);
+        });
+        card.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                abrirModal(card.dataset.modalId, card);
+            }
+        });
+    });
+
     document.querySelectorAll('[data-frete-box]').forEach(function (box) {
         const cepInput = box.querySelector('[data-frete-cep]');
         const btn = box.querySelector('[data-frete-btn]');

@@ -12,5 +12,6 @@
 | [PASSO_A_PASSO_CLOUDFLARED.md](PASSO_A_PASSO_CLOUDFLARED.md) | Instalar e usar o cloudflared |
 | [MANUAL_CLOUDFLARE.md](MANUAL_CLOUDFLARE.md) | Conceito do túnel trycloudflare |
 | [HIGIENIZACAO.md](HIGIENIZACAO.md) | O que foi removido / o que manter |
+| [VALIDACAO_TESTES_LOCAL.md](VALIDACAO_TESTES_LOCAL.md) | Evidências, escopo e limites dos testes locais |
 
 Pitch do produto: [`breagnote.md`](../breagnote.md) na raiz.

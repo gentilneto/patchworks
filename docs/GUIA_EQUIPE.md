@@ -10,6 +10,8 @@ cd patchworks
 # main já é a v2.0
 ```
 
+Para testar as mudanças desta PR antes da aprovação, clone a branch `codex/site-demo-improvements` do repositório `gentilneto/patchworks`.
+
 Para ver a v1 antiga (somente leitura / comparação):
 
 ```bash
@@ -45,18 +47,22 @@ Crie o banco (WorkBench ou CLI):
 
 ```sql
 CREATE DATABASE IF NOT EXISTS patchworks CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS 'patchworks'@'localhost' IDENTIFIED BY 'patchworks123';
+CREATE USER IF NOT EXISTS 'patchworks'@'localhost' IDENTIFIED BY 'SUA_SENHA_LOCAL';
 GRANT ALL PRIVILEGES ON patchworks.* TO 'patchworks'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-Depois:
+Depois, no Windows, dê dois cliques em `INICIAR_LOCAL.bat`. Ele prepara o ambiente, instala dependências quando necessário, aplica migrações e carrega o catálogo se estiver vazio. Abra o endereço mostrado na janela. Se a porta 8000 estiver em uso, escolhe outra sem encerrar o processo existente. Use uma senha local no comando acima; não reutilize senha de serviço nem a publique.
+
+Para preparar o banco manualmente:
 
 ```bash
 python manage.py migrate
-python manage.py loaddata data/fixture_inicial.json
+python manage.py seed_demo
 python manage.py createsuperuser
 ```
+
+Não carregue `data/fixture_inicial.json`: ela é antiga, pode falhar por codificação no Windows e contém um usuário administrativo de demonstração. `seed_demo` não cria contas e não substitui dados de catálogo existentes.
 
 As imagens já estão em `media/` no repositório.
 
@@ -68,6 +74,8 @@ python manage.py runserver
 
 - http://127.0.0.1:8000/  
 - http://127.0.0.1:8000/admin/
+
+Para a demonstração com HTTPS temporário, consulte a seção correspondente no [README](../README.md#apresentação-com-https-temporário). O computador, o iniciador e o `cloudflared` precisam permanecer ligados durante o acesso do grupo.
 
 ## 6. Frete + túnel Cloudflare (opcional por integrante)
 

@@ -52,6 +52,26 @@ a {
     color: inherit;
 }
 
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 16px;
+    z-index: 1000;
+    padding: 10px 16px;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(calc(-100% - 8px));
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
 /* =========================
    Header
 ========================= */

@@ -58,6 +58,37 @@ git checkout v1.0
 
 ## Como rodar (equipe)
 
+### Início rápido no Windows
+
+Para testar as mudanças desta PR antes da aprovação, clone a branch dela:
+
+```bash
+git clone -b codex/site-demo-improvements https://github.com/gentilneto/patchworks.git
+cd patchworks
+```
+
+1. Instale Python 3.12+ e MySQL 8; crie o banco e o usuário conforme a seção **Banco MySQL** abaixo.
+2. Faça uma cópia local de `.env.example` com o nome `.env` e preencha os dados locais do MySQL. O iniciador cria uma chave Django privada se ela estiver vazia.
+3. Dê dois cliques em `INICIAR_LOCAL.bat`.
+
+Na primeira execução, o iniciador prepara o ambiente Python, instala as dependências, verifica o Django, aplica migrações e carrega o catálogo de demonstração apenas se o catálogo estiver vazio. Depois abre o servidor em `http://127.0.0.1:8000/` (ou escolhe a próxima porta livre sem encerrar processos existentes). Para parar, pressione **Ctrl+C** na janela do servidor.
+
+O iniciador local usa o frete simulado e não precisa de credenciais do Melhor Envio. Para executar o modo manual abaixo, use o mesmo banco MySQL e não carregue `data/fixture_inicial.json`: o arquivo antigo tem codificação incompatível com algumas instalações do Windows e inclui uma conta administrativa de exemplo. O iniciador usa `data/fixture_demo.json`, sem contas de usuário.
+
+### Apresentação com HTTPS temporário
+
+Instale `cloudflared` uma vez, como descrito na seção abaixo. Antes da apresentação:
+
+1. Feche qualquer servidor antigo e abra um terminal para executar `cloudflared tunnel --url http://127.0.0.1:8000`.
+2. Copie a URL HTTPS `trycloudflare.com` que aparecer.
+3. Execute `INICIAR_APRESENTACAO.bat -UrlApresentacao https://seu-link.trycloudflare.com`.
+
+O servidor anterior precisa estar parado e livre na porta escolhida; no modo de apresentação o iniciador não muda a porta automaticamente, para manter o túnel apontando para o local certo.
+
+O iniciador configura a URL exata para hosts e CSRF só durante esse processo, mantém o Django escutando apenas no próprio computador e inicia o site. A URL temporária funciona somente enquanto o computador, o Django e o túnel estiverem ligados. Para encerrar, pressione **Ctrl+C** nas duas janelas. Não use esta modalidade como hospedagem permanente.
+
+Se precisar executar manualmente, siga as instruções abaixo.
+
 ### Pré-requisitos
 
 - Python 3.12+ (ou 3.14)  
@@ -83,7 +114,10 @@ pip install -r requirements.txt
 # Configurar ambiente
 copy .env.example .env   # Windows
 # cp .env.example .env   # Linux/macOS
-# Edite .env (MySQL + Melhor Envio)
+# Gere uma chave exclusiva para o Django e preencha DJANGO_SECRET_KEY no .env:
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+# Edite .env (chave, MySQL + Melhor Envio). Para executar localmente com imagens,
+# use DJANGO_DEBUG=True; não exponha essa configuração em hospedagem pública.
 ```
 
 ### Banco MySQL
@@ -92,18 +126,22 @@ copy .env.example .env   # Windows
 
 ```sql
 CREATE DATABASE IF NOT EXISTS patchworks CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS 'patchworks'@'localhost' IDENTIFIED BY 'patchworks123';
+CREATE USER IF NOT EXISTS 'patchworks'@'localhost' IDENTIFIED BY 'troque-por-uma-senha-local-forte';
 GRANT ALL PRIVILEGES ON patchworks.* TO 'patchworks'@'localhost';
 FLUSH PRIVILEGES;
 ```
+
+Use a mesma senha local em `MYSQL_PASSWORD` no `.env`. Não reutilize senhas de outros serviços.
 
 2. Migre e carregue os dados de exemplo:
 
 ```bash
 python manage.py migrate
-python manage.py loaddata data/fixture_inicial.json
+python manage.py seed_demo
 python manage.py createsuperuser
 ```
+
+`seed_demo` não cria usuários e não sobrescreve um catálogo existente. Crie um usuário administrador apenas se precisar acessar o `/admin/`.
 
 ### Servidor
 
@@ -117,9 +155,11 @@ python manage.py runserver
 ### Melhor Envio (cotação)
 
 1. Cadastre um app em **Integrações → Área Dev.** (sandbox)  
-2. Preencha `MELHOR_ENVIO_CLIENT_ID`, `CLIENT_SECRET` e `REDIRECT_URI` no `.env`  
+2. Preencha `MELHOR_ENVIO_CLIENT_ID`, `MELHOR_ENVIO_CLIENT_SECRET` e `MELHOR_ENVIO_REDIRECT_URI` no `.env`
 3. Callback precisa de **HTTPS** → use o túnel Cloudflare (seção abaixo)  
 4. Autorize: http://127.0.0.1:8000/api/melhorenvio/autorizar/  
+
+Para uma apresentação sem credenciais, `MELHOR_ENVIO_SIMULATE_FREIGHT=True` mostra duas opções ilustrativas, identificadas na tela como simulação. Isso não consulta transportadoras nem representa preço ou prazo real. Para testar o Melhor Envio, deixe a opção `False`, configure as credenciais e autorize a conta Sandbox.
 
 Detalhes: `docs/MANUAL_MELHOR_ENVIO.md`
 
@@ -141,13 +181,27 @@ winget install Cloudflare.cloudflared --accept-package-agreements --accept-sourc
 
 Feche e abra o PowerShell; confira com `cloudflared --version`.
 
-### 2. Subir o Django
+### 2. Preparar uma demonstração HTTPS
 
-```powershell
-python manage.py runserver
+No `.env`, use estes ajustes apenas para a apresentação pelo túnel:
+
+```env
+DJANGO_DEBUG=False
+DJANGO_TRUST_PROXY_SSL_HEADER=True
+DJANGO_SECURE_HSTS_SECONDS=3600
+DJANGO_SERVE_MEDIA_FILES=True
+MELHOR_ENVIO_SIMULATE_FREIGHT=True
 ```
 
-### 3. Abrir o túnel (outro terminal)
+O projeto ativa redirecionamento HTTPS e cookies seguros quando `DJANGO_DEBUG=False`. O túnel Cloudflare informa ao Django o protocolo original da visita. O serviço temporário de mídia abaixo mantém as imagens do catálogo disponíveis durante a demonstração. A opção de simulação exibe valores ilustrativos; ela não consulta o Melhor Envio.
+
+### 3. Subir o Django
+
+```powershell
+python manage.py runserver --insecure
+```
+
+### 4. Abrir o túnel (outro terminal)
 
 ```powershell
 cloudflared tunnel --url http://127.0.0.1:8000
@@ -159,7 +213,7 @@ Copie a URL que aparecer, por exemplo:
 https://nome-aleatorio.trycloudflare.com
 ```
 
-### 4. Atualizar o `.env` (e o app no Melhor Envio)
+### 5. Atualizar o `.env` (e o app no Melhor Envio)
 
 ```env
 DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost,nome-aleatorio.trycloudflare.com
@@ -169,7 +223,9 @@ MELHOR_ENVIO_REDIRECT_URI=https://nome-aleatorio.trycloudflare.com/api/melhorenv
 
 No Melhor Envio (Área Dev), use o **mesmo** callback. Reinicie o `runserver`.
 
-### 5. Fechar o túnel (quando não quiser mais)
+`runserver --insecure` e `DJANGO_SERVE_MEDIA_FILES=True` servem apenas para uma demonstração curta. Para produção, use um servidor WSGI/ASGI e um serviço próprio para arquivos de mídia; não mantenha `runserver` exposto à internet.
+
+### 6. Fechar o túnel (quando não quiser mais)
 
 1. No terminal do `cloudflared`, pressione **`Ctrl + C`** — o HTTPS some na hora.  
 2. (Opcional) Pode fechar também o `runserver` com **`Ctrl + C`**.  

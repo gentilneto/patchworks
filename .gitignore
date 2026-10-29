@@ -10,12 +10,17 @@ venv/
 # Segredos e ambiente
 .env
 .env.local
+/melhorenvio_token.json
+/teste/dados_env.txt
+/teste/melhorenvio_token.json
 melhorenvio_token.json
 
 # Django
 db.sqlite3
 *.sqlite3
 *.log
+/staticfiles/
+/.local-mysql/
 
 # VS Code / IDE
 .vscode/

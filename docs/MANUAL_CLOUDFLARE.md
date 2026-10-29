@@ -94,5 +94,5 @@ MELHOR_ENVIO_REDIRECT_URI=https://NOVA-URL/api/melhorenvio/callback/
 
 ## 5. Alternativa futura
 
-Publicar o Django em Render/Railway/VPS com domínio HTTPS próprio.  
+Escolher uma hospedagem contínua para o Django, com domínio HTTPS próprio.
 Aí o túnel deixa de ser necessário para OAuth.

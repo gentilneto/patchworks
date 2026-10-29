@@ -60,6 +60,11 @@
     box-shadow: 0 16px 36px rgba(31, 26, 23, 0.12);
 }
 
+.produto-card:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+}
+
 .produto-card-imagem-wrap {
     position: relative;
     background: var(--bg-deep);
@@ -112,7 +117,7 @@
 .desconto-badge {
     display: inline-block;
     background: rgba(184, 92, 56, 0.12);
-    color: var(--copper);
+    color: var(--ink);
     font-size: 0.75rem;
     font-weight: 700;
     padding: 3px 8px;
@@ -211,7 +216,24 @@
     overflow-y: auto;
 }
 
+.galeria-thumb {
+    flex: 0 0 auto;
+    width: 94px;
+    height: 94px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.galeria-thumb:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
 .galeria-img {
+    display: block;
     width: 90px;
     height: 90px;
     object-fit: cover;
@@ -221,7 +243,7 @@
     transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
-.galeria-img:hover {
+.galeria-thumb:hover .galeria-img {
     transform: translateY(-2px);
     border-color: var(--bg-deep);
 }
@@ -389,8 +411,20 @@
     color: var(--accent);
 }
 
+.frete-status.is-simulated {
+    padding: 8px 10px;
+    border-left: 3px solid var(--copper);
+    border-radius: 4px;
+    background: rgba(184, 92, 56, 0.1);
+    color: var(--ink);
+}
+
 .frete-status.is-error {
-    color: var(--copper);
+    padding: 8px 10px;
+    border-left: 3px solid var(--copper);
+    border-radius: 4px;
+    background: rgba(184, 92, 56, 0.1);
+    color: var(--ink);
 }
 
 .frete-calculo-info {
@@ -517,5 +551,16 @@
     .modal-content {
         padding: 18px;
         width: 95%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .produto-card,
+    .galeria-img,
+    .reveal {
+        scroll-behavior: auto;
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
     }
 }

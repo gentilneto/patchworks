@@ -112,5 +112,5 @@ Não versionar: `.env`, `melhorenvio_token.json`, `venv/`.
 
 ## 7. Produção (futuro)
 
-Hospedar Django + MySQL (Render/Railway/VPS) com HTTPS próprio.  
+Escolher hospedagem contínua para Django e MySQL, com HTTPS próprio.
 O túnel Cloudflare é só para desenvolvimento / OAuth sandbox.
